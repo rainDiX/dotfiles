@@ -1,0 +1,49 @@
+#--General options-------------------------------------------------------------#
+set-option global indentwidth 4
+colorscheme tomorrow-night-bright
+
+#--Highlighters----------------------------------------------------------------#
+add-highlighter global/ number-lines -relative -hlcursor -separator '│'
+add-highlighter global/ show-matching
+add-highlighter global/ show-whitespaces
+add-highlighter global/ wrap
+
+#--Filetypes-------------------------------------------------------------------#
+hook global BufCreate .*/waybar/config %{
+    set-option buffer filetype json
+}
+
+hook global BufCreate .*.service %{
+    set-option buffer filetype ini
+}
+
+#--System Clipboard------------------------------------------------------------#
+
+hook global RegisterModified 'c' %{ nop %sh{
+    printf %s "$kak_main_reg_c" | wl-copy -n > /dev/null 2>&1 &
+}}
+
+hook global RegisterModified 'p' %{ nop %sh{
+    printf %s "$kak_main_reg_p" | wl-copy -pn > /dev/null 2>&1 &
+}}
+
+define-command -docstring 'set the c & p registers from the system clipboard' \
+        pull-clipboard %{ evaluate-commands %sh{
+    echo set-register c "$(wl-paste -n)"
+}}
+
+evaluate-commands %sh{
+    if [ $TERM != foot ]; then
+        printf "hook global RawKey <mouse:press:middle:.*> 'exec <esc>!wl-paste<space>-pn<ret>'"
+    fi
+}
+#--Modules---------------------------------------------------------------------#
+#hook global ModuleLoaded x11 %{
+#    set-option global termcmd "gnome-terminal -e"
+#}
+
+#--kak-lsp---------------------------------------------------------------------#
+eval %sh{kak-lsp --kakoune -s $kak_session}
+hook global WinSetOption filetype=(rust|c|cpp) %{
+    lsp-enable-window
+}
