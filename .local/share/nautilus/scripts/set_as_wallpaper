@@ -1,0 +1,15 @@
+#!/bin/bash
+FILE="${NAUTILUS_SCRIPT_SELECTED_FILE_PATHS%?}"
+if [ $(xdg-mime query filetype "$FILE" | cut -d '/' -f 1) = "image" ];then
+    OUTPUT=$(swaymsg -t get_outputs | jq -r '.[].name')
+    if [ $(echo "$OUTPUT" | wc -w ) != "1" ];then
+        OUTPUT=$(echo "$OUTPUT" | rofi -dmenu -p '>')
+    fi
+    if [ -n "$OUTPUT" ]; then
+        if [ ! -e ~/.local/share/backgrounds ]; then
+            mkdir -p ~/.local/share/backgrounds
+        fi
+        cp "${FILE}" ~/.local/share/backgrounds/"$OUTPUT"
+      swaymsg output "$OUTPUT" bg ~/.local/share/backgrounds/"$OUTPUT" fill
+    fi
+fi
