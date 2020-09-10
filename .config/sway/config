@@ -368,4 +368,5 @@ exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 #exec sleep 1 && dex -a
 exec redshift-gtk -b 1.0:0.8 -l 43.0:1.45
 
+# Machine specific settings like wallpaper, output & some input configurations are in config.local
 include $HOME/.config/sway/config.local
