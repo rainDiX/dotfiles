@@ -350,7 +350,7 @@ bindsym $mod+semicolon exec ~/.local/scripts/splatmoji/splatmoji copy
 # Program bindsym
 #
 bindsym XF86Search exec nautilus --new-window
-bindsym $mod+escape exec $term -e htop
+bindsym $mod+escape exec $term htop
 
 # Wofi scripts
 #
