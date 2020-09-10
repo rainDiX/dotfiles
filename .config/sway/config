@@ -296,12 +296,14 @@ bindsym $mod+Shift+Escape mode "VM (Press Mod+Shift+Enter to quit)"
 
 # Screenshot
 
-bindsym --release Print exec grimshot save output $(xdg-user-dir PICTURES)/Screenshots/$(date +"%Y-%m")/Screenshot_of_$(date +"%Y-%m-%d-%H.%M.%S").png
-bindsym --release alt+Print exec grimshot save area $(xdg-user-dir PICTURES)/Screenshots/$(date +"%Y-%m")/Screenshot_of_$(date +"%Y-%m-%d-%H.%M.%S").png
-bindsym --release $mod+Print exec grimshot save window $(xdg-user-dir PICTURES)/Screenshots/$(date +"%Y-%m")/Screenshot_of_$(date +"%Y-%m-%d-%H.%M.%S").png
-bindsym --release Shift+Print exec grimshot copy output
-bindsym --release alt+Shift+Print exec grimshot copy area
-bindsym --release $mod+Shift+Print exec grimshot copy window
+bindsym --release Print exec swayshot save -o
+bindsym --release alt+Print exec swayshot save -r
+bindsym --release $mod+Print exec swayshot save -a
+bindsym --release $mod+alt+Print exec swayshot save -w
+bindsym --release Shift+Print exec swayshot copy -o
+bindsym --release alt+Shift+Print exec swayshot copy -r
+bindsym --release $mod+Shift+Print exec swayshot copy -a
+bindsym --release $mod+alt+Shift+Print exec swayshot copy -w
 
 # Screen brightness
 #

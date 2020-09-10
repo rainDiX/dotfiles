@@ -1,0 +1,28 @@
+#!/bin/sh
+
+select_player() {
+    sel=''
+    for player in $1
+    do
+        status=$(playerctl --player=$player status 2> /dev/null)
+        case $status in
+            Playing )
+                _text=" $(playerctl --player=$player metadata title) - $(playerctl --player=$player metadata artist)"
+                sel="$sel$player : $_text\n"
+                ;;
+            Paused )
+                _text=" $(playerctl --player=$player metadata title) - $(playerctl --player=$player metadata artist)"
+                sel="$sel$player : $_text\n"
+                ;;
+        esac
+    done
+    echo -e "$sel" | rofi -dmenu | cut -d ':' -f 1
+}
+
+players="$(playerctl -l)"
+if [ "$(echo "$players" | wc -l)" == '1' ]; then
+    playerctl $1
+else
+    player=$(select_player "$players")
+    playerctl --player="$player" $1
+fi
