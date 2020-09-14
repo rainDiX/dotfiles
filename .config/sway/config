@@ -48,6 +48,7 @@ set $ws8 "8"
 for_window [app_id="menu"] floating enable
 for_window [app_id="qalculate-gtk"] floating enable
 for_window [app_id="desktopclient.nextcloud.com.nextcloud"] floating enable
+for_window [app_id="com.nextcloud.desktopclient.nextcloud"] floating enable
 for_window [app_id="desktopclient.owncloud.com.owncloud"] floating enable
 for_window [app_id="xdg-desktop-portal-gtk"] floating enable
 for_window [title="About Mozilla Firefox"] floating enable
@@ -113,24 +114,6 @@ input "1386:890:Wacom_One_by_Wacom_S_Pen" {
 #	# map_from_region 0.0x0.0 0.4x0.4	
 #	# rectange of ~ 4.5cm x 2.5cm on my tablet 
 	map_from_region 0.3x0.3 0.6x0.6	
-}
-
-### Idle configuration
-#
-exec swayidle -w \
-         timeout 300 'swaymsg "output * dpms off"' \
-              resume 'swaymsg "output * dpms on"' \
-         timeout 330 'swaylock -f -c 330000EF' \
-         timeout 330 'loginctl suspend' \
-         before-sleep 'swaylock -f -c 330000EF'
-
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
-
-### Status bar
-bar {
-    swaybar_command waybar
 }
 
 ### Key bindings
@@ -308,8 +291,8 @@ bindsym --release $mod+alt+Shift+Print exec swayshot copy -w
 
 # Screen brightness
 #
-bindsym XF86MonBrightnessUp exec pkexec /usr/bin/brillo -qA 1 && brillo -qG | cut -d . -f 1 > $SWAYSOCK.wob
-bindsym XF86MonBrightnessDown exec pkexec /usr/bin/brillo -qU 1 && brillo -qG | cut -d . -f 1 > $SWAYSOCK.wob
+bindsym XF86MonBrightnessUp exec pkexec brillo -qA 1 && brillo -qG | cut -d . -f 1 > $SWAYSOCK.wob
+bindsym XF86MonBrightnessDown exec pkexec brillo -qU 1 && brillo -qG | cut -d . -f 1 > $SWAYSOCK.wob
 
 bindsym alt+XF86MonBrightnessUp exec ddclight + 2 && ddclight > $SWAYSOCK.wob
 bindsym alt+XF86MonBrightnessDown exec ddclight - 2 && ddclight > $SWAYSOCK.wob
@@ -361,7 +344,6 @@ bindsym $mod+Shift+U exec rofi-udisks unmount
 
 ## Autostart
 ##
-exec --no-startup-id env PIPEWIRE_LATENCY=256/48000 pipewire
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #exec pulseaudio --start
 exec /usr/lib/xdg-desktop-portal -r & /usr/lib/xdg-desktop-portal-wlr
@@ -371,3 +353,4 @@ exec redshift-gtk -b 1.0:0.8 -l 43.0:1.45
 
 # Machine specific settings like wallpaper, output & some input configurations are in config.local
 include $HOME/.config/sway/config.local
+include /etc/sway/config.d/*
