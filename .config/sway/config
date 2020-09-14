@@ -51,6 +51,7 @@ for_window [app_id="desktopclient.nextcloud.com.nextcloud"] floating enable
 for_window [app_id="desktopclient.owncloud.com.owncloud"] floating enable
 for_window [app_id="xdg-desktop-portal-gtk"] floating enable
 for_window [title="About Mozilla Firefox"] floating enable
+for_window [title="Firefox - Sharing Indicator"] floating enable
 for_window [title="Picture-in-Picture"] floating enable
 for_window [title="Copying — Dolphin"] floating enable
 # File picker for apps that doesn't use gtk-portal
@@ -360,9 +361,9 @@ bindsym $mod+Shift+U exec rofi-udisks unmount
 
 ## Autostart
 ##
+exec --no-startup-id env PIPEWIRE_LATENCY=256/48000 pipewire
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec pulseaudio --start
-exec --no-startup-id pipewire &
+#exec pulseaudio --start
 exec /usr/lib/xdg-desktop-portal -r & /usr/lib/xdg-desktop-portal-wlr
 exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 #exec sleep 1 && dex -a
