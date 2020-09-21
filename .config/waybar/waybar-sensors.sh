@@ -20,7 +20,7 @@ done
 if [ "$dell_smm" != 'null' ]; then
   name='Fan'
   rpm=$(cat "$dell_smm"/fan1_input)
-  tooltip="$tooltip$name\t\t$rpm RPM\n"
+  tooltip="$tooltip$name\\\\t\\\\t$rpm RPM\\\\n"
 fi
 
 if [ "$coretemp" != 'null' ]; then
@@ -33,14 +33,14 @@ if [ "$coretemp" != 'null' ]; then
        text="$temp°C"
        # on most CPUs the max temp is 100°C
        percentage=$temp 
-       tooltip="$tooltip$name\t$temp°C\n"
+       tooltip="$tooltip$name\\\\t$temp°C\\\\n"
      else
-       tooltip="$tooltip$name\t\t$temp°C\n"
+       tooltip="$tooltip$name\\\\t\\\\t$temp°C\\\\n"
      fi
   done
 fi
 
 # remove the last useless \n
-tooltip=${tooltip%??}
+tooltip=${tooltip%???}
 
 echo '{"text": "'$text'", "tooltip": "'$tooltip'", "percentage": '$percentage' }'

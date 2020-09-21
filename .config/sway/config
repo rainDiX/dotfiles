@@ -20,7 +20,7 @@ client.unfocused        #333333 #222222 #999995 #292D2E   #222222
 client.urgent           #2F343A #F92672 #F8F8F2 #66D9EF   #F92672
 client.placeholder      #1B1D1E #0C0C0C #F8F8F2 #000000   #0C0C0C
 # xcursor
-seat seat0 xcursor_theme Breeze 24
+seat seat0 xcursor_theme breeze_cursors 24
 #gaps outer 4
 #gaps inner 8
 #smart_gaps on
@@ -64,7 +64,7 @@ for_window [title="File Operation Progress"] floating enable
 # Lutris
 for_window [title="Select an EXE or MSI file"] floating enable
 # Nemo pop-up
-for_window [title="nemo" app_id="nemo"] floating enable
+#for_window [title="nemo" app_id="nemo"] floating enable
 for_window [title="Properties" app_id="nemo"] floating enable
 for_window [class="Etterna"] fullscreen enable
 for_window [app_id="osu!"] fullscreen enable
@@ -141,10 +141,9 @@ input "1386:890:Wacom_One_by_Wacom_S_Pen" {
     # Change the layout
     bindsym $mod+p exec ~/.local/scripts/change_layout.sh
 
-    # exit sway (logs you out of your Wayland session)
-#bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit ? ' -b 'Yes, exit sway' 'swaymsg exit'
+# exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exec wlogout -b 5 -m 450 -p layer-shell
-#bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit ? ' -b 'Yes, exit ' 'loginctl terminate-user $USER' -b 'Yes, exit and reboot' 'reboot' -b 'Yes, exit and poweroff' 'poweroff'
+
 #
 # Moving around:
 #
@@ -291,21 +290,21 @@ bindsym --release $mod+alt+Shift+Print exec swayshot copy -w
 
 # Screen brightness
 #
-bindsym XF86MonBrightnessUp exec pkexec brillo -qA 1 && brillo -qG | cut -d . -f 1 > $SWAYSOCK.wob
-bindsym XF86MonBrightnessDown exec pkexec brillo -qU 1 && brillo -qG | cut -d . -f 1 > $SWAYSOCK.wob
+bindsym XF86MonBrightnessUp exec pkexec /usr/bin/brillo -qA 1 && brillo -qG | cut -d . -f 1 > $SWAYSOCK.wob
+bindsym XF86MonBrightnessDown exec pkexec /usr/bin/brillo -qU 1 && brillo -qG | cut -d . -f 1 > $SWAYSOCK.wob
 
 bindsym alt+XF86MonBrightnessUp exec ddclight + 2 && ddclight > $SWAYSOCK.wob
 bindsym alt+XF86MonBrightnessDown exec ddclight - 2 && ddclight > $SWAYSOCK.wob
 
 #Keyboard brightness
-bindsym XF86KbdBrightnessUp exec pkexec brillo -A 1 -rks dell::kbd_backlight
-bindsym XF86KbdBrightnessDown exec pkexec brillo -U 1 -rks dell::kbd_backlight
-#
+bindsym XF86KbdBrightnessUp exec pkexec /usr/bin/brillo -A 1 -rks dell::kbd_backlight
+bindsym XF86KbdBrightnessDown exec pkexec /usr/bin/brillo -U 1 -rks dell::kbd_backlight
+
+# Volume pulse
 bindsym XF86AudioRaiseVolume exec pamixer -ui 2 && pamixer --get-volume > $SWAYSOCK.wob
 bindsym XF86AudioLowerVolume exec pamixer -ud 2 && pamixer --get-volume > $SWAYSOCK.wob
 bindsym XF86AudioMute exec pamixer --toggle-mute && (pamixer·--get-mute && echo 0 > $SWAYSOCK.wob)
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 1 toggle
-
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 2 toggle
 
 # Volume Plain Alsa
 #
@@ -325,7 +324,7 @@ bindsym XF86Calculator exec qalculate-gtk
 
 # Lock the session
 #
-bindsym $mod+ctrl+l exec swaylock -f -c 330000EF
+bindsym $mod+ctrl+l exec swaylock -f -c 330000F4
 
 # Emoji picker (^O^)
 #
@@ -348,7 +347,6 @@ exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #exec pulseaudio --start
 exec /usr/lib/xdg-desktop-portal -r & /usr/lib/xdg-desktop-portal-wlr
 exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
-#exec sleep 1 && dex -a
 exec redshift-gtk -b 1.0:0.8 -l 43.0:1.45
 
 # Machine specific settings like wallpaper, output & some input configurations are in config.local

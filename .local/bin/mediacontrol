@@ -16,11 +16,12 @@ select_player() {
                 ;;
         esac
     done
-    echo -e "$sel" | rofi -dmenu | cut -d ':' -f 1
+    echo "$sel" | rofi -dmenu | cut -d ':' -f 1
 }
 
 players="$(playerctl -l)"
-if [ "$(echo "$players" | wc -l)" == '1' ]; then
+echo $players
+if [ "$(echo "$players" | wc -l)" = '1' ]; then
     playerctl $1
 else
     player=$(select_player "$players")

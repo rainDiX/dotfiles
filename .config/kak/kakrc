@@ -1,6 +1,6 @@
 #--General options-------------------------------------------------------------#
 set-option global indentwidth 4
-colorscheme tomorrow-night-bright
+colorscheme ayu-mirage
 
 #--Highlighters----------------------------------------------------------------#
 add-highlighter global/ number-lines -relative -hlcursor -separator '│'
@@ -46,4 +46,5 @@ evaluate-commands %sh{
 eval %sh{kak-lsp --kakoune -s $kak_session}
 hook global WinSetOption filetype=(rust|c|cpp) %{
     lsp-enable-window
+    set-option buffer indentwidth 2
 }

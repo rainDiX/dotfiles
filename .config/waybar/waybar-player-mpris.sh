@@ -10,12 +10,12 @@ do
     Playing )
       _text=" $(playerctl --player=$player metadata title) - $(playerctl --player=$player metadata artist)"
       text="$text\n$_text"
-      tooltip="$tooltip$player : $_text\n"
+      tooltip="$tooltip$player : $_text"
       ;;
     Paused )
       _text=" $(playerctl --player=$player metadata title) - $(playerctl --player=$player metadata artist)"
       text="$text\n$_text"
-      tooltip="$tooltip$player : $_text\n"
+      tooltip="$tooltip$player : $_text"
       ;;
     Stopped )
       _text=""
@@ -26,7 +26,7 @@ done
 
 #text=$(echo -e "$text" | tail -1 | tr -d "'")
 #tooltip=$(echo "$tooltip" | tr -d "'")
-text=$(echo -e "$text" | tail -1)
+text=$(echo "$text" | tail -1)
 if [ -n "$text" ]; then
   echo '{"text": "'$text'", "tooltip": "'$tooltip'" }'
 else
