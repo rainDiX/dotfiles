@@ -109,12 +109,12 @@
   },
   "custom/menu": {
     "format": "",
-    "on-click": "rofi -show drun &",
+    "on-click": "rofi -show drun",
     "tooltip": false
   },
   "custom/powermenu": {
     "format": "襤",
-    "on-click": "wlogout -b 5 -m 450 -p layer-shell",
+    "on-click": "wlogout -b 5 -m 400 -p layer-shell",
     "tooltip": false
   },
   "custom/prev": {

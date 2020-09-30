@@ -6,7 +6,7 @@
 configuration {
 	display-drun:    "Activate";
 	display-run:     "Execute";
-	display-window:  "Window";
+/*	display-window:  "Window";*/
 	show-icons:      true;
 	sidebar-mode:    true;
 }
@@ -17,8 +17,7 @@ configuration {
 	selbg:                       #215d9c;
 	actbg:                       #262626;
 	urgbg:                       #e53935;
-	winbg:			     #26c6da;
-
+	winbg:                       #26c6da;
 	selected-normal-foreground:  @winbg;
 	normal-foreground:           @text-color;
 	selected-normal-background:  @actbg;
@@ -43,12 +42,12 @@ configuration {
 }
 
 window {
-	location:	 west;
-	anchor:		 west;
-	height:		 100%;
-	width:		 22%;
-	orientation: horizontal;
-	children:	 [mainbox];
+	location:        west;
+	anchor:          west;
+	height:          100%;
+	width:           22%;
+	orientation:     horizontal;
+	children:        [mainbox];
 }
 
 mainbox {

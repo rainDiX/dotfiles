@@ -24,11 +24,9 @@ do
   esac
 done
 
-#text=$(echo -e "$text" | tail -1 | tr -d "'")
-#tooltip=$(echo "$tooltip" | tr -d "'")
-text=$(echo "$text" | tail -1)
+# Remove the last new line & insert a \ before the quote character if present
+text=$(echo "$text" | tail -1 | sed 's|"|\\"|g')
+tooltip=$(echo $tooltip | sed 's|"|\\"|g')
 if [ -n "$text" ]; then
   echo '{"text": "'$text'", "tooltip": "'$tooltip'" }'
-else
-  echo ''
 fi
