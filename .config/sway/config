@@ -86,7 +86,7 @@ set $menu rofi -show drun
         repeat_delay 500
         repeat_rate 30
         xkb_layout fr
-#xkb_variant oss
+        xkb_variant afnor
     }
 
 #
@@ -113,7 +113,7 @@ input "1386:890:Wacom_One_by_Wacom_S_Pen" {
 #	# rectange from top left corner 
 #	# map_from_region 0.0x0.0 0.4x0.4	
 #	# rectange of ~ 4.5cm x 2.5cm on my tablet 
-	map_from_region 0.3x0.3 0.6x0.6	
+#	map_from_region 0.3x0.3 0.6x0.6	
 }
 
 ### Key bindings
@@ -172,28 +172,49 @@ bindsym $mod+Shift+e exec wlogout -b 5 -m 400 -p layer-shell
 
 # switch to workspace
 workspace_auto_back_and_forth yes
-bindsym $mod+ampersand workspace $ws1
-bindsym $mod+eacute workspace $ws2
-bindsym $mod+quotedbl workspace $ws3
-bindsym $mod+apostrophe workspace $ws4
-bindsym $mod+parenleft workspace $ws5
-bindsym $mod+minus workspace $ws6
-bindsym $mod+egrave workspace $ws7
-bindsym $mod+underscore workspace $ws8
+#bindsym $mod+ampersand workspace $ws1
+#bindsym $mod+eacute workspace $ws2
+#bindsym $mod+quotedbl workspace $ws3
+#bindsym $mod+apostrophe workspace $ws4
+#bindsym $mod+parenleft workspace $ws5
+#bindsym $mod+minus workspace $ws6
+#bindsym $mod+egrave workspace $ws7
+#bindsym $mod+underscore workspace $ws8
 #bindsym $mod+ccedilla workspace $ws9
 #bindsym $mod+agrave workspace $ws10
-
 # move focused container to workspace
-bindsym $mod+Shift+ampersand move container to workspace $ws1
-bindsym $mod+Shift+eacute move container to workspace $ws2
-bindsym $mod+Shift+quotedbl move container to workspace $ws3
-bindsym $mod+Shift+apostrophe move container to workspace $ws4
-bindsym $mod+Shift+parenleft move container to workspace $ws5
-bindsym $mod+Shift+minus move container to workspace $ws6
-bindsym $mod+Shift+egrave move container to workspace $ws7
-bindsym $mod+Shift+underscore move container to workspace $ws8
+#bindsym $mod+Shift+ampersand move container to workspace $ws1
+#bindsym $mod+Shift+eacute move container to workspace $ws2
+#bindsym $mod+Shift+quotedbl move container to workspace $ws3
+#bindsym $mod+Shift+apostrophe move container to workspace $ws4
+#bindsym $mod+Shift+parenleft move container to workspace $ws5
+#bindsym $mod+Shift+minus move container to workspace $ws6
+#bindsym $mod+Shift+egrave move container to workspace $ws7
+#bindsym $mod+Shift+underscore move container to workspace $ws8
 #bindsym $mod+Shift+ccedilla move container to workspace $ws9
 #bindsym $mod+Shift+agrave move container to workspace $ws10
+
+# designed for AZERTY afnor variant
+bindsym $mod+agrave workspace $ws1
+bindsym $mod+eacute workspace $ws2
+bindsym $mod+egrave workspace $ws3
+bindsym $mod+ecircumflex workspace $ws4
+bindsym $mod+parenleft workspace $ws5
+bindsym $mod+parenright workspace $ws6
+bindsym $mod+leftsinglequotemark workspace $ws7
+bindsym $mod+rightsinglequotemark workspace $ws8
+#bindsym $mod+guillemotleft workspace $ws9
+#bindsym $mod+guillemotright workspace $ws10
+bindsym $mod+Shift+agrave move container to workspace $ws1
+bindsym $mod+Shift+eacute move container to workspace $ws2
+bindsym $mod+Shift+egrave move container to workspace $ws3
+bindsym $mod+Shift+ecircumflex move container to workspace $ws4
+bindsym $mod+Shift+parenleft move container to workspace $ws5
+bindsym $mod+Shift+parenright move container to workspace $ws6
+bindsym $mod+Shift+leftsinglequotemark move container to workspace $ws7
+bindsym $mod+Shift+rightsinglequotemark move container to workspace $ws8
+#bindsym $mod+Shift+guillemotleft move container to workspace $ws9
+#bindsym $mod+Shift+guillemotright move container to workspace $ws10
 
 
 workspace $ws1 output eDP-1

@@ -1,142 +1,204 @@
-{
-//  "layer": "top", // Waybar at top layer
-//  "output": "eDP-1",	// This is the principal bar that goes to the primary monitor
-  "position": "bottom",
-  "height": 34,
-  "modules-left": [ "custom/menu", "sway/workspaces", "sway/mode", "cpu", "memory", "custom/tempmon" ],
-  "modules-center": [ "pulseaudio", "custom/music", "custom/prev", "custom/playpause", "custom/next"],
-  "modules-right": [ "tray", "idle_inhibitor", "network", "battery", "clock", "custom/powermenu"],
-  // Modules configuration
-"sway/workspaces": {
-         "disable-scroll": true,
-         "all-outputs": false,
-         "format": "{name}", //{icon},
-         "format-icons": {
-             "1": "一",
-             "2": "二",
-             "3": "三",
-             "4": "四",
-             "5": "五",
-             "6": "六",
-             "7": "七",
-             "8": "八",
-             "9": "九",
-             "10": "十",
-             "urgent": "",
-             "focused": "",
-             "default": ""
-         }
-     },
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
+[
+    {
+        //  "layer": "top", // Waybar at top layer
+        "output": "eDP-1",	// This is the principal bar that goes to the primary monitor
+        "position": "bottom",
+        "height": 34,
+        "modules-left": [ "custom/menu", "sway/workspaces", "sway/mode", "cpu", "memory", "custom/tempmon" ],
+        "modules-center": [ "pulseaudio", "custom/music", "custom/prev", "custom/playpause", "custom/next"],
+        "modules-right": [ "tray", "idle_inhibitor", "network", "battery", "clock", "custom/powermenu"],
+        // Modules configuration
+        "sway/workspaces": {
+            "disable-scroll": true,
+            "all-outputs": false,
+            "format": "{name}", //{icon},
+            "format-icons": {
+                "1": "一",
+                "2": "二",
+                "3": "三",
+                "4": "四",
+                "5": "五",
+                "6": "六",
+                "7": "七",
+                "8": "八",
+                "9": "九",
+                "10": "十",
+                "urgent": "",
+                "focused": "",
+                "default": ""
+            }
+        },
+        "sway/mode": {
+            "format": "<span style=\"italic\">{}</span>"
+        },
+        "tray": {
+            //"icon-size": 21,
+            "spacing": 10
+        },
+        "wlr/taskbar": {
+            "format": "{icon}",
+            "icon-size": 20,
+            //"icon-theme": "Numix-Circle",
+            "tooltip-format": "{title}",
+            "on-click": "activate",
+            "on-click-middle": "close"
+        },
+        "clock": {
+            "format": " {:%H:%M}",
+            "format-alt": " {:%a %d %b}",
+            "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        },
+        "cpu": {
+            "format": "﬙ {usage}%"
+        },
+        "memory": {
+            "format": " {}%"
+        },
+        "idle_inhibitor": {
+            "format": "{icon}",
+            "format-icons": {
+            "activated": "",
+            "deactivated": ""
+            }
+        },
+        "battery": {
+            "states": {
+                // "good": 95,
+                "warning": 30,
+                "critical": 15
+            },
+            "format": "{icon} {capacity}%",
+            // "format-good": "", // An empty format will hide the module
+            // "format-full": "",
+            "format-icons": ["", "", "", "", ""]
+        },
+        "network": {
+            "tooltip-format-wifi": "{essid} ({frequency} MHz)\n{ifname}: {ipaddr}/{cidr}\nSignal Strength {signaldBm} dBm\n{bandwidthDownOctets} {bandwidthUpOctets}",
+            "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+            "format-ethernet": " {ipaddr}",
+            "format-wifi": " {signalStrength}%",
+            "format-disconnected": "⚠ Disconnected",
+            "on-click": "foot iwctl"
+        },
+        "pulseaudio": {
+            // "scroll-step": 1, // %, can be a float
+            "format": "{icon} {volume}% {format_source}",
+            "format-bluetooth": "{icon} {volume}% {format_source}",
+            "format-bluetooth-muted": " {icon} {format_source}",
+            "format-muted": " {format_source}",
+            "format-source": " {volume}%",
+            "format-source-muted": "",
+            "format-icons": {
+                "headphone": "",
+                "hands-free": "",
+                "headset": "",
+                "phone": "",
+                "portable": "",
+                "car": "",
+                "default": ["", "", ""]
+            },
+            "on-click": "pavucontrol"
+        },
+        "custom/music": {
+            "format": " {} ",
+            "max-length": 40,
+            "interval": 2,
+            "return-type": "json",
+            "exec": "$HOME/.config/waybar/waybar-player-mpris.sh 2> /dev/null"
+        },
+        "custom/menu": {
+            "format": "",
+            "on-click": "rofi -show drun",
+            "tooltip": false
+        },
+        "custom/powermenu": {
+            "format": "襤",
+            "on-click": "wlogout -b 5 -m 400 -p layer-shell",
+            "tooltip": false
+        },
+        "custom/prev": {
+            "format": "玲",
+            "on-click": "mediacontrol previous",
+            "tooltip": false
+        },
+        "custom/playpause": {
+            "format": "懶",
+            "on-click": "mediacontrol play-pause",
+            "tooltip": false
+        },
+        "custom/next": {
+            "format": "怜",
+            "on-click": "mediacontrol next",
+            "tooltip": false
+        },
+        "custom/tempmon": {
+            "format": "{icon} {}",
+            "format-icons": ["","", "", ""],
+            "interval": 5,
+            "return-type": "json",
+            "exec": "$HOME/.config/waybar/waybar-sensors.sh 2> /dev/null"
+        }
     },
-  
-  "tray": {
-    //"icon-size": 21,
-    "spacing": 10
-  },
-  "wlr/taskbar": {
-    "format": "{icon}",
-    "icon-size": 20,
-    //"icon-theme": "Numix-Circle",
-    "tooltip-format": "{title}",
-    "on-click": "activate",
-    "on-click-middle": "close"
-  },
-  "clock": {
-    "format": " {:%H:%M}",
-    "format-alt": " {:%a %d %b}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
-  },
-  "cpu": {
-    "format": "﬙ {usage}%"
-  },
-  "memory": {
-    "format": " {}%"
-  },
-  "idle_inhibitor": {
-    "format": "{icon}",
-    "format-icons": {
-      "activated": "",
-      "deactivated": ""
+    {
+        "output": "!eDP-1",
+        "position": "bottom",
+        "height": 34,
+        "modules-left": [ "sway/workspaces" ],
+        "modules-center": [ "pulseaudio"],
+        "modules-right": [ "battery", "clock"],
+        "sway/workspaces": {
+            "disable-scroll": true,
+            "all-outputs": false,
+            "format": "{name}", //{icon},
+            "format-icons": {
+                "1": "一",
+                "2": "二",
+                "3": "三",
+                "4": "四",
+                "5": "五",
+                "6": "六",
+                "7": "七",
+                "8": "八",
+                "9": "九",
+                "10": "十",
+                "urgent": "",
+                "focused": "",
+                "default": ""
+            }
+        },
+        "pulseaudio": {
+            "format": "{icon} {volume}% {format_source}",
+            "format-bluetooth": "{icon} {volume}% {format_source}",
+            "format-bluetooth-muted": " {icon} {format_source}",
+            "format-muted": " {format_source}",
+            "format-source": " {volume}%",
+            "format-source-muted": "",
+            "format-icons": {
+                "headphone": "",
+                "hands-free": "",
+                "headset": "",
+                "phone": "",
+                "portable": "",
+                "car": "",
+                "default": ["", "", ""]
+            },
+            "on-click": "pavucontrol"
+        },
+        "battery": {
+            "states": {
+                // "good": 95,
+                "warning": 30,
+                "critical": 15
+            },
+            "format": "{icon} {capacity}%",
+            // "format-good": "", // An empty format will hide the module
+            // "format-full": "",
+            "format-icons": ["", "", "", "", ""]
+        },
+        "clock": {
+            "format": " {:%H:%M}",
+            "format-alt": " {:%a %d %b}",
+            "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        }
     }
-  },
-  "battery": {
-    "states": {
-      // "good": 95,
-      "warning": 30,
-      "critical": 15
-    },
-    "format": "{icon} {capacity}%",
-    // "format-good": "", // An empty format will hide the module
-    // "format-full": "",
-    "format-icons": ["", "", "", "", ""]
-  },
-  "network": {
-    //"tooltip-format-wifi": "{essid} ({frequency} MHz)\n{ifname}: {ipaddr}/{cidr}\n{signaldBm} dBm {bandwidthDownOctets} {bandwidthUpOctets}",
-    "tooltip-format-wifi": "{essid} ({frequency} MHz)\n{ifname}: {ipaddr}/{cidr}\nSignal Strength {signaldBm} dBm\n{bandwidthDownOctets} {bandwidthUpOctets}",
-    "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
-    "format-ethernet": " {ipaddr}",
-    "format-wifi": " {signalStrength}%",
-    "format-disconnected": "⚠ Disconnected",
-	"on-click": "connman-gtk"
-  },
-  "pulseaudio": {
-    // "scroll-step": 1, // %, can be a float
-    "format": "{icon} {volume}% {format_source}",
-    "format-bluetooth": "{icon} {volume}% {format_source}",
-    "format-bluetooth-muted": " {icon} {format_source}",
-    "format-muted": " {format_source}",
-    "format-source": " {volume}%",
-    "format-source-muted": "",
-    "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": ["", "", ""]
-    },
-    "on-click": "pavucontrol"
-  },
-  "custom/music": {
-    "format": " {} ",
-    "max-length": 40,
-    "interval": 2,
-    "return-type": "json",
-    "exec": "$HOME/.config/waybar/waybar-player-mpris.sh 2> /dev/null"
-  },
-  "custom/menu": {
-    "format": "",
-    "on-click": "rofi -show drun",
-    "tooltip": false
-  },
-  "custom/powermenu": {
-    "format": "襤",
-    "on-click": "wlogout -b 5 -m 400 -p layer-shell",
-    "tooltip": false
-  },
-  "custom/prev": {
-    "format": "玲",
-    "on-click": "mediacontrol previous",
-    "tooltip": false
-  },
-  "custom/playpause": {
-    "format": "懶",
-    "on-click": "mediacontrol play-pause",
-    "tooltip": false
-  },
-  "custom/next": {
-    "format": "怜",
-    "on-click": "mediacontrol next",
-    "tooltip": false
-  },
-  "custom/tempmon": {
-    "format": "{icon} {}",
-    "format-icons": ["","", "", ""],
-    "interval": 5,
-    "return-type": "json",
-    "exec": "$HOME/.config/waybar/waybar-sensors.sh 2> /dev/null"
-  }
-}
+]
