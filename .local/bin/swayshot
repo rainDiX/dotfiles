@@ -7,7 +7,7 @@ filterInvalidWindowsCharacters() {
 printUsage() {
     echo 'a screenshot helper for sway like grimshot'
     echo 'Usage:'
-    echo '  swayshot copy|save [ -w | -a | -r | -o ]'
+    echo "  $0 copy|save [ -w | -a | -r | -o ]"
     echo 'Commands:'
     echo '  copy: Copy the screenshot into the clipboard'
     echo '  save: Save the screenshot into XDG_PICTURES_DIR/Screenshots'

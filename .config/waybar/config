@@ -102,7 +102,7 @@
         "custom/music": {
             "format": " {} ",
             "max-length": 40,
-            "interval": 2,
+            "interval": 4,
             "return-type": "json",
             "exec": "$HOME/.config/waybar/waybar-player-mpris.sh 2> /dev/null"
         },
@@ -143,7 +143,7 @@
         "output": "!eDP-1",
         "position": "bottom",
         "height": 34,
-        "modules-left": [ "sway/workspaces" ],
+        "modules-left": [ "custom/menu","sway/workspaces" ],
         "modules-center": [ "pulseaudio"],
         "modules-right": [ "battery", "clock"],
         "sway/workspaces": {
@@ -199,6 +199,11 @@
             "format": " {:%H:%M}",
             "format-alt": " {:%a %d %b}",
             "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        },
+	"custom/menu": {
+            "format": "",
+            "on-click": "rofi -show drun",
+            "tooltip": false
         }
     }
 ]

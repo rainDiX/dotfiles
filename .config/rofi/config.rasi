@@ -6,5 +6,5 @@ configuration {
   run-shell-command: "{terminal} {cmd}";
   show-icons: true;
   sidebar-mode: true;
-  font: "Roboto 12";
+  font: "Roboto 12, Symbols Nerd Font 12";
 }
