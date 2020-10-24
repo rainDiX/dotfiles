@@ -5,8 +5,10 @@
 (tool-bar-mode -1)
 (toggle-scroll-bar -1)
 
-;; Enable line number
-(global-display-line-numbers-mode)
+;; Enable line number on prog mode
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
+
 ;(setq display-line-numbers-type 'relative)
 
 ;; Set default font
@@ -55,8 +57,9 @@ inhibit-startup-echo-area-message t)
         (quelpa '(rainbow-mode :fetcher url
                                :url "http://git.savannah.gnu.org/cgit/emacs/elpa.git/plain/packages/rainbow-mode/rainbow-mode.el")))
 
-(unless (package-installed-p 'dracula-theme)
-  (quelpa 'dracula-theme))
+(unless (package-installed-p 'base16-theme)
+  (quelpa 'base16-theme))
+
 
 (unless (package-installed-p 'markdown-mode)
   (quelpa 'markdown-mode))
@@ -90,7 +93,8 @@ inhibit-startup-echo-area-message t)
   (setq minimap-window-location 'right
         minimap-update-delay 0
         minimap-width-fraction 0.09
-        minimap-minimum-width 15)
+        minimap-minimum-width 15
+	minimap-highlight-line nil)
   (custom-set-faces
    '(minimap-active-region-background ((t (:extend t :background "#44475A"))))))
 
@@ -201,7 +205,8 @@ inhibit-startup-echo-area-message t)
 
 (use-package lsp-mode
     :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-            (c-mode . lsp)
+           (c-mode . lsp)
+	   (c++-mode . lsp)
             ;; if you want which-key integration
             (lsp-mode . lsp-enable-which-key-integration))
     :commands lsp)
@@ -212,9 +217,11 @@ inhibit-startup-echo-area-message t)
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(dracula))
+ '(custom-enabled-themes '(base16-material-darker))
  '(custom-safe-themes
-   '("24714e2cb4a9d6ec1335de295966906474fdb668429549416ed8636196cb1441" default)))
+   '("196df8815910c1a3422b5f7c1f45a72edfa851f6a1d672b7b727d9551bb7c7ba" "24714e2cb4a9d6ec1335de295966906474fdb668429549416ed8636196cb1441" default))
+ '(package-selected-packages
+   '(magit use-package treemacs-projectile treemacs-magit treemacs-icons-dired rainbow-mode quelpa minimap lsp-mode highlight-indent-guides dracula-theme all-the-icons)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

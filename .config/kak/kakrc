@@ -1,6 +1,6 @@
 #--General options-------------------------------------------------------------#
 set-option global indentwidth 4
-colorscheme ayu-mirage
+colorscheme tomorrow-night
 
 #--Highlighters----------------------------------------------------------------#
 add-highlighter global/ number-lines -relative -hlcursor -separator '│'
