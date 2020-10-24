@@ -20,7 +20,7 @@ client.unfocused        #333333 #222222 #999995 #292D2E   #222222
 client.urgent           #2F343A #F92672 #F8F8F2 #66D9EF   #F92672
 client.placeholder      #1B1D1E #0C0C0C #F8F8F2 #000000   #0C0C0C
 # xcursor
-seat seat0 xcursor_theme breeze_cursors 24
+seat seat0 xcursor_theme xcursor-chromeos 24
 #gaps outer 4
 #gaps inner 8
 #smart_gaps on
@@ -85,8 +85,9 @@ set $menu rofi -show drun
     input type:keyboard {
         repeat_delay 500
         repeat_rate 30
-        xkb_layout fr
-        xkb_variant afnor
+        xkb_layout fr,gb
+        xkb_variant afnor,
+	xkb_options grp:alt_shift_toggle
     }
 
 #
@@ -369,6 +370,7 @@ exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec /usr/lib/xdg-desktop-portal -r & /usr/lib/xdg-desktop-portal-wlr
 exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 exec redshift-gtk -b 1.0:0.8 -l 43.0:1.45
+exec xsettingsd
 
 # Machine specific settings like wallpaper, output & some input configurations are in config.local
 include $HOME/.config/sway/config.local
