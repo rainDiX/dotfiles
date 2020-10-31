@@ -21,9 +21,9 @@ client.urgent           #2F343A #F92672 #F8F8F2 #66D9EF   #F92672
 client.placeholder      #1B1D1E #0C0C0C #F8F8F2 #000000   #0C0C0C
 # xcursor
 seat seat0 xcursor_theme xcursor-chromeos 24
-#gaps outer 4
-#gaps inner 8
-#smart_gaps on
+gaps outer 3
+gaps inner 6
+smart_gaps on
 
 #
 # Workspaces:
@@ -255,6 +255,8 @@ workspace $ws8 output HDMI-A-1
 
     # move focus to the parent container
     bindsym $mod+a focus parent
+
+    bindsym $mod+x exec killall -SIGUSR1 waybar
 #
 # Scratchpad:
 #
