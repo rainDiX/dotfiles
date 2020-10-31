@@ -2,16 +2,20 @@
     {
         //  "layer": "top", // Waybar at top layer
         "output": "eDP-1",	// This is the principal bar that goes to the primary monitor
-        "position": "bottom",
-        "height": 34,
-        "modules-left": [ "custom/menu", "sway/workspaces", "sway/mode", "cpu", "memory", "custom/tempmon" ],
-        "modules-center": [ "pulseaudio", "custom/music", "custom/prev", "custom/playpause", "custom/next"],
-        "modules-right": [ "tray", "idle_inhibitor", "network", "battery", "clock", "custom/powermenu"],
+        "position": "top",
+        "height": 28,
+	"margin-top": 6,
+	"margin-bottom": 3,
+	"margin-right": 12,
+	"margin-left": 12,
+        "modules-left": [ "custom/menu", "sway/workspaces", "pulseaudio", "custom/music" ],
+	"modules-center": [ "sway/mode", "sway/window" ],
+        "modules-right": [ "tray", "idle_inhibitor", "network", "custom/tempmon", "cpu", "memory", "battery", "clock", "custom/powermenu"],
         // Modules configuration
         "sway/workspaces": {
             "disable-scroll": true,
             "all-outputs": false,
-            "format": "{name}", //{icon},
+            "format": "{icon}", //{name},
             "format-icons": {
                 "1": "一",
                 "2": "二",
@@ -27,6 +31,10 @@
                 "focused": "",
                 "default": ""
             }
+        },
+	"sway/window": {
+	    "format": "{}",
+	    "max-length": 40
         },
         "sway/mode": {
             "format": "<span style=\"italic\">{}</span>"
@@ -102,7 +110,8 @@
         "custom/music": {
             "format": " {} ",
             "max-length": 40,
-            "interval": 4,
+            "interval": 3,
+	    "on-click": "mediacontrol play-pause",
             "return-type": "json",
             "exec": "$HOME/.config/waybar/waybar-player-mpris.sh 2> /dev/null"
         },
@@ -116,21 +125,6 @@
             "on-click": "wlogout -b 5 -m 400 -p layer-shell",
             "tooltip": false
         },
-        "custom/prev": {
-            "format": "玲",
-            "on-click": "mediacontrol previous",
-            "tooltip": false
-        },
-        "custom/playpause": {
-            "format": "懶",
-            "on-click": "mediacontrol play-pause",
-            "tooltip": false
-        },
-        "custom/next": {
-            "format": "怜",
-            "on-click": "mediacontrol next",
-            "tooltip": false
-        },
         "custom/tempmon": {
             "format": "{icon} {}",
             "format-icons": ["","", "", ""],
@@ -141,15 +135,19 @@
     },
     {
         "output": "!eDP-1",
-        "position": "bottom",
-        "height": 34,
-        "modules-left": [ "custom/menu","sway/workspaces" ],
-        "modules-center": [ "pulseaudio"],
-        "modules-right": [ "battery", "clock"],
+        "position": "top",
+        "height": 28,
+	"margin-top": 6,
+	"margin-bottom": 3,
+	"margin-right": 12,
+	"margin-left": 12,
+        "modules-left": [ "custom/menu","sway/workspaces", "pulseaudio" ],
+	"modules-center": [ "sway/window" ],
+        "modules-right": [ "battery", "clock", "custom/powermenu" ],
         "sway/workspaces": {
             "disable-scroll": true,
             "all-outputs": false,
-            "format": "{name}", //{icon},
+            "format": "{icon}", //{name},
             "format-icons": {
                 "1": "一",
                 "2": "二",
@@ -199,6 +197,11 @@
             "format": " {:%H:%M}",
             "format-alt": " {:%a %d %b}",
             "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        },
+	"custom/powermenu": {
+            "format": "襤",
+            "on-click": "wlogout -b 5 -m 400 -p layer-shell",
+            "tooltip": false
         },
 	"custom/menu": {
             "format": "",
