@@ -1,0 +1,37 @@
+#!/bin/sh
+
+printUsage() {
+    echo 'This script is a workaround, add it in your path'
+    echo 'Use a custom terminal instead of the hard-coded gnome-terminal'
+    echo 'Usage:'
+    echo 'edit the values of termcmd & termexecargs in this script'
+    echo "gnome-terminal [ -e|-- command ]"
+}
+
+termcmd='foot'
+termexecargs=''
+
+arg=$1
+
+if [ -n "$arg" ] && [ "$arg" != "--" ] && [ "$arg" != "-e" ]; then
+    printUsage
+    exit
+fi
+
+if [ -n "$arg" ] && [ -z "$2" ]; then
+    printUsage
+    exit
+fi
+
+if [ "$arg" = "-e" ] || [ "$arg" = "--" ]; then
+    cmdline="$termcmd $termexecargs"
+    while [ "$2" ]
+    do
+        cmdline="$cmdline $2"
+        shift
+    done
+    $cmdline
+else
+    $termcmd
+fi
+
