@@ -9,7 +9,7 @@ printUsage() {
 }
 
 termcmd='foot'
-termexecargs=''
+termexecargs='sh -c'
 
 arg=$1
 
@@ -25,12 +25,13 @@ fi
 
 if [ "$arg" = "-e" ] || [ "$arg" = "--" ]; then
     cmdline="$termcmd $termexecargs"
+    args=''
     while [ "$2" ]
     do
-        cmdline="$cmdline $2"
+        args="$args \"$2\""
         shift
     done
-    $cmdline
+    $cmdline "$args"
 else
     $termcmd
 fi
