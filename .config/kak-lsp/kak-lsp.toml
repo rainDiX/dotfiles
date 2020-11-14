@@ -24,12 +24,15 @@ verbosity = 2
 # set to 0 to disable
 timeout = 1800 # seconds = 30 minutes
 
-
-[language.rust]
-  filetypes = ["rust"]
-  roots = ["Cargo.toml"]
-  command = "rust-analyzer"
 [language.c_cpp]
   filetypes = ["c", "cpp"]
   roots = ["compile_commands.json", ".clangd"]
   command = "clangd"
+[language.rust]
+  filetypes = ["rust"]
+  roots = ["Cargo.toml"]
+  command = "rust-analyzer"
+[language.zig]
+  filetypes = ["zig"]
+  roots = ["build.zig"]
+  command = "zls"

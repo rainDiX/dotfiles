@@ -1,6 +1,8 @@
+source "%val{config}/plugins/plug.kak/rc/plug.kak"
+
 #--General options-------------------------------------------------------------#
 set-option global indentwidth 4
-colorscheme tomorrow-night
+colorscheme ayu-dark
 
 #--Highlighters----------------------------------------------------------------#
 add-highlighter global/ number-lines -relative -hlcursor -separator '│'
@@ -38,13 +40,21 @@ evaluate-commands %sh{
     fi
 }
 #--Modules---------------------------------------------------------------------#
-#hook global ModuleLoaded x11 %{
-#    set-option global termcmd "gnome-terminal -e"
+hook global ModuleLoaded x11 %{
+    set-option global termcmd "foot -a floating-foot sh -c"
+}
+
+plug "andreyorst/fzf.kak" config %{
+    map -docstring 'fzf mode' global normal '<c-p>' ': fzf-mode<ret>'
+} #defer "fzf" %{
 #}
 
 #--kak-lsp---------------------------------------------------------------------#
 eval %sh{kak-lsp --kakoune -s $kak_session}
-hook global WinSetOption filetype=(rust|c|cpp) %{
+hook global WinSetOption filetype=(c|cpp|rust|zig) %{
     lsp-enable-window
+    map -docstring enter-lsp-mode global normal '<c-l>' ': enter-user-mode lsp <ret>'
+}
+hook global WinSetOption filetype=(c|cpp|vhdl) %{
     set-option buffer indentwidth 2
 }
