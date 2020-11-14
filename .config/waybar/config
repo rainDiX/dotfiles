@@ -4,12 +4,12 @@
         "output": "eDP-1",	// This is the principal bar that goes to the primary monitor
         "position": "top",
         "height": 28,
-	"margin-top": 6,
-	"margin-bottom": 3,
-	"margin-right": 12,
-	"margin-left": 12,
+        "margin-top": 6,
+        "margin-bottom": 3,
+        "margin-right": 12,
+        "margin-left": 12,
         "modules-left": [ "custom/menu", "sway/workspaces", "pulseaudio", "custom/music" ],
-	"modules-center": [ "sway/mode", "sway/window" ],
+        "modules-center": [ "sway/mode", "sway/window" ],
         "modules-right": [ "tray", "idle_inhibitor", "network", "custom/tempmon", "cpu", "memory", "battery", "clock", "custom/powermenu"],
         // Modules configuration
         "sway/workspaces": {
@@ -32,9 +32,9 @@
                 "default": ""
             }
         },
-	"sway/window": {
-	    "format": "{}",
-	    "max-length": 40
+        "sway/window": {
+            "format": "{}",
+            "max-length": 40
         },
         "sway/mode": {
             "format": "<span style=\"italic\">{}</span>"
@@ -111,7 +111,7 @@
             "format": " {} ",
             "max-length": 40,
             "interval": 3,
-	    "on-click": "mediacontrol play-pause",
+            "on-click": "mediacontrol play-pause",
             "return-type": "json",
             "exec": "$HOME/.config/waybar/waybar-player-mpris.sh 2> /dev/null"
         },
@@ -137,12 +137,12 @@
         "output": "!eDP-1",
         "position": "top",
         "height": 28,
-	"margin-top": 6,
-	"margin-bottom": 3,
-	"margin-right": 12,
-	"margin-left": 12,
+        "margin-top": 6,
+        "margin-bottom": 3,
+        "margin-right": 12,
+        "margin-left": 12,
         "modules-left": [ "custom/menu","sway/workspaces", "pulseaudio" ],
-	"modules-center": [ "sway/window" ],
+        "modules-center": [ "sway/window" ],
         "modules-right": [ "battery", "clock", "custom/powermenu" ],
         "sway/workspaces": {
             "disable-scroll": true,
@@ -163,6 +163,10 @@
                 "focused": "",
                 "default": ""
             }
+        },
+        "sway/window": {
+            "format": "{}",
+            "max-length": 40
         },
         "pulseaudio": {
             "format": "{icon} {volume}% {format_source}",
@@ -198,12 +202,12 @@
             "format-alt": " {:%a %d %b}",
             "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
         },
-	"custom/powermenu": {
+        "custom/powermenu": {
             "format": "襤",
             "on-click": "wlogout -b 5 -m 400 -p layer-shell",
             "tooltip": false
         },
-	"custom/menu": {
+        "custom/menu": {
             "format": "",
             "on-click": "rofi -show drun",
             "tooltip": false

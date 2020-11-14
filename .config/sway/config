@@ -51,6 +51,7 @@ for_window [app_id="desktopclient.nextcloud.com.nextcloud"] floating enable
 for_window [app_id="com.nextcloud.desktopclient.nextcloud"] floating enable
 for_window [app_id="desktopclient.owncloud.com.owncloud"] floating enable
 for_window [app_id="xdg-desktop-portal-gtk"] floating enable
+for_window [app_id="floating-foot"] floating enable
 for_window [title="About Mozilla Firefox"] floating enable
 for_window [title="Firefox - Sharing Indicator"] floating enable
 for_window [title="Picture-in-Picture"] floating enable
@@ -108,7 +109,7 @@ set $menu rofi -show drun
 ## Wacom config for when I play osu!
 ## The rectangle is relative to the top left corner 
 input "1386:890:Wacom_One_by_Wacom_S_Pen" {
-	map_to_output HDMI-A-1
+#	map_to_output HDMI-A-1
 #	# rectange of ~ 9cm x 5.5cm on my tablet 
 	#map_from_region 0.25x0.25 0.75x0.75	
 #	# rectange from top left corner 
