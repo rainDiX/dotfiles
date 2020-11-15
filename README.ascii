@@ -1,0 +1,10 @@
+== My dotfiles
+
+Just a classic dotfiles repository, feel free to clone it and resuse my stuff.
+It includes some configuration for kakoune, kak-lsp, sway, waybar & more.
+
+=== Deploying
+Either clone it and symlink the files or do a git bare repository, it's up to you.
+
+==== Little warning
+I'm french and I use a very uncommon keyboard layout (azerty afnor), so make sure to modify all the keybing to fit your layout.
