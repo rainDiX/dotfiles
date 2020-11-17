@@ -20,6 +20,7 @@ window#waybar {
     margin: 0px;
     min-height: 24px;
     min-width: 24px;
+    color: #808080;
     border-bottom: 3px solid transparent;
 }
 

@@ -78,7 +78,7 @@ set $right l
 # Terminal emulator
 set $term foot
 # Application launcher
-set $menu rofi -show drun
+set $menu rofi -theme launcher -show drun
 
 
 ### Input configuration
