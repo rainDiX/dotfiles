@@ -36,13 +36,13 @@ evaluate-commands %sh{
     echo "
         # then we map them to code
         face global value ${syntax_constant}
-        face global type ${syntax_entity}
+        face global type ${syntax_entity}+i
         face global variable ${syntax_regexp}
         face global module ${syntax_special}
         face global identifier ${syntax_regexp}
         face global function ${syntax_func}
         face global string ${syntax_string}
-        face global keyword ${syntax_keyword}
+        face global keyword ${syntax_keyword}+b
         face global operator ${syntax_operator}
         face global attribute ${syntax_tag}
         face global comment ${syntax_comment}
@@ -65,13 +65,13 @@ evaluate-commands %sh{
         face global PrimarySelection ${common_fg},${ui_selection_bg}+fg@Default
         face global SecondarySelection  ${common_fg},${ui_selection_inactive}+fg@Default
 
-        face global PrimaryCursor ${common_fg},${common_accent}+fg
+        face global PrimaryCursor ${common_bg},${common_accent}+fg
         face global SecondaryCursor ${common_fg},${ui_guide_active}+fg
 
         face global PrimaryCursorEol ${common_fg},${ui_guide_normal}+Bfg
         face global SecondaryCursorEol ${common_fg},${ui_guide_normal}+fg
 
-        face global LineNumbers ${ui_guide_active},${common_bg}+f
+        face global LineNumbers ${ui_guide_normal},${common_bg}+f
         face global LineNumberCursor ${common_accent},${ui_line}
 
         face global MenuForeground ${common_fg},${ui_selection_bg}
@@ -86,7 +86,7 @@ evaluate-commands %sh{
         face global StatusLineValue ${vcs_modified},${ui_panel_border}
         face global StatusCursor ${common_fg},${common_accent}
         face global Prompt ${ui_panel_border},${vcs_added}
-        face global MatchingChar default,${ui_panel_shadow}
+        face global MatchingChar ${common_accent},default+bu
         face global BufferPadding default,${ui_guide_normal}
         face global Whitespace ${ui_guide_normal}+f
     "
