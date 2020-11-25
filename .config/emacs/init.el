@@ -1,5 +1,5 @@
-;; enable nativecomp
-(setq comp-deferred-compilation t)
+;; enable nativecomp (gccemacs)
+;(setq comp-deferred-compilation t)
 
 ;; Disable some interface elements
 (tool-bar-mode -1)
@@ -7,96 +7,147 @@
 
 ;; Enable line number on prog mode
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(setq display-line-numbers-grow-only t)
+(setq display-line-numbers-width-start t)
 
+(setq visible-bell t)
 
-;(setq display-line-numbers-type 'relative)
+;; reduce the frequency of garbage collection
+;; GC each 64MB of allocated data (the default is on every 0.76MB)
+(setq gc-cons-threshold 64000000)
 
-;; Set default font
-(set-face-attribute 'default nil
-                    :family "Fantasque Sans Mono"
-                    :height 130
-                    :weight 'normal
-                    :width 'normal)
-
-;; General settings
+;; Default font
+(set-face-attribute 'default nil :font "Fantasque Sans Mono 12")
+;; Startup directly into a scratch buffer
 (setq inhibit-startup-message t
-inhibit-startup-echo-area-message t)
+      inhibit-startup-echo-area-message t)
+
 (setq-default cursor-type 'bar)
 (show-paren-mode)
 (define-key global-map (kbd "RET") 'newline-and-indent)
+;; Prefer UTF8
+(prefer-coding-system 'utf-8)
+(when (display-graphic-p)
+  (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
 ;; make the delete key behave like a a forward looking version of backspace
 (global-set-key [delete] 'delete-char)
 (global-set-key [M-delete] 'kill-word)
 
-;; enable package management
-(require 'package)
+;; Bootstrap code for straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-;; bootstrap the quelpa package manager
-(unless (package-installed-p 'quelpa)
-    (with-temp-buffer
-        (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
-        (eval-buffer)
-        (quelpa-self-upgrade)))
+;; install use-package with straight
+(straight-use-package 'use-package)
+(defvar straight-use-package-by-default)
+(setq straight-use-package-by-default t)
 
+;; disable package.el
+(setq package-enable-at-startup nil)
 
-;; Bootstrap `use-package'
-(unless (package-installed-p 'use-package)
-        (package-refresh-contents)
-        (quelpa 'use-package))
+;; use use-package to install, load & configure packages
+(require 'use-package)
+(setq straight-use-package-by-default t)
 
 ;; Packages
+(use-package doom-themes
+  :config
+  (setq doom-themes-enable-bold t
+	doom-themes-enable-italic t)
+  (load-theme 'doom-molokai t)
 
-(unless (package-installed-p 'minimap)
-        (quelpa '(minimap :repo "dengste/minimap" :fetcher github )))
+  (doom-themes-visual-bell-config)
+  )
 
-(unless (package-installed-p 'all-the-icons)
-        (quelpa 'all-the-icons))
-
-(unless (package-installed-p 'rainbow-mode)
-        (quelpa '(rainbow-mode :fetcher url
-                               :url "http://git.savannah.gnu.org/cgit/emacs/elpa.git/plain/packages/rainbow-mode/rainbow-mode.el")))
-
-(unless (package-installed-p 'base16-theme)
-  (quelpa 'base16-theme))
-
-
-(unless (package-installed-p 'markdown-mode)
-  (quelpa 'markdown-mode))
-
-(unless (package-installed-p 'highlight-indent-guides)
-  (quelpa 'highlight-indent-guides))
-
-(unless (package-installed-p 'magit)
-  (quelpa 'magit))
-
-(unless (package-installed-p 'projectile)
-  (quelpa 'projectile))
-
-(unless (package-installed-p 'treemacs)
-  (quelpa 'treemacs)
-  (quelpa 'treemacs-projectile)
-  (quelpa 'treemacs-icons-dired)
-  (quelpa 'treemacs-magit))
-
-(unless (package-installed-p 'lsp-mode)
-  (quelpa 'lsp-mode))
-
-;; Packages config
-(minimap-mode 1)
-
-(use-package rainbow-mode)
-
+;; A minimap like every other modern editors
 (use-package minimap
-  :defer t
   :config
   (setq minimap-window-location 'right
         minimap-update-delay 0
         minimap-width-fraction 0.09
         minimap-minimum-width 15
 	minimap-highlight-line nil)
-  (custom-set-faces
-   '(minimap-active-region-background ((t (:extend t :background "#44475A"))))))
+  :hook (prog-mode . minimap-mode))
+
+(use-package ligature
+  :straight (:host github
+             :repo "mickeynp/ligature.el")
+  :config
+  ;; Enable traditional ligature support in eww-mode, if the
+  ;; `variable-pitch' face supports it
+  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+  ;; Enable all Fantasque ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("<<" ">>" "&&" "||" "//" "/*" "*/" "/**/" "|||>" "||>" "|>"
+				       "==" "===" "==>" "=>" "=>>" "=<<" "=/=" "!=" "!==" ">=" ">=>"
+                                       ">>=" ">>-" ">-" ">->" "->" "->>" "-->" "-<" "-<<" "<|" "<||"
+                                       "<|||" "<|>" "<=" "<==" "<=>" "<=<" "<!--" "<>" "<-" "<->"
+				       "<--" "<-<" "<<=" "<<-" "<~" "<~>" "<~~" "~>" "~~" "~~>"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))
+
+
+
+;; Ivy completion framework
+
+(use-package ivy
+  :commands ivy-mode
+  :bind (("C-x b" . ivy-switch-buffer)
+         ("C-x C-b" . ivy-switch-buffer))
+  :custom-face
+  (ivy-org ((t (:inherit default))))
+  :config
+  (ivy-mode 1))
+
+(use-package counsel
+  :commands (counsel-M-x
+             counsel-find-file
+             counsel-file-jump
+             counsel-recentf
+             counsel-rg
+             counsel-describe-function
+             counsel-describe-variable
+             counsel-find-library)
+  :bind (("M-x" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)
+         ("C-x f" . counsel-file-jump)
+         ("C-x C-r" . counsel-recentf)
+         ("C-x d" . counsel-dired)
+         ("C-h f" . counsel-describe-function)
+         ("C-h C-f" . counsel-describe-face)
+         ("C-h v" . counsel-describe-variable)
+         ("C-h l" . counsel-find-library))
+  :config
+  (when (executable-find "fd")
+    (define-advice counsel-file-jump (:around (foo &optional initial-input initial-directory) aorst:counsel-fd)
+      (let ((find-program "fd")
+            (counsel-file-jump-args (split-string "-L --type f --hidden")))
+        (funcall foo initial-input initial-directory))))
+  (when (executable-find "rg")
+    (setq counsel-rg-base-command
+          "rg -S --no-heading --hidden --line-number --color never %s .")))
+
+(use-package highlight-indent-guides
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :custom
+  (highlight-indent-guides-method 'character)
+  (highlight-indent-guides-character ?▏)
+  (highlight-indent-guides-responsive 'top)
+  (highlight-indent-guides-delay 0))
+
+
+(use-package rainbow-mode)
 
 (use-package markdown-mode
   :ensure t
@@ -105,126 +156,16 @@ inhibit-startup-echo-area-message t)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package highlight-indent-guides-mode
-  :hook prog-mode
-  :init
-  (setq highlight-indent-guides-method 'character))
-
-
-(use-package treemacs
-  :ensure t
-  :defer t
-  :init
-  (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-  :config
-  (progn
-    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
-          treemacs-deferred-git-apply-delay      0.5
-          treemacs-directory-name-transformer    #'identity
-          treemacs-display-in-side-window        t
-          treemacs-eldoc-display                 t
-          treemacs-file-event-delay              5000
-          treemacs-file-extension-regex          treemacs-last-period-regex-value
-          treemacs-file-follow-delay             0.2
-          treemacs-file-name-transformer         #'identity
-          treemacs-follow-after-init             t
-          treemacs-git-command-pipe              ""
-          treemacs-goto-tag-strategy             'refetch-index
-          treemacs-indentation                   2
-          treemacs-indentation-string            " "
-          treemacs-is-never-other-window         nil
-          treemacs-max-git-entries               5000
-          treemacs-missing-project-action        'ask
-          treemacs-move-forward-on-expand        nil
-          treemacs-no-png-images                 nil
-          treemacs-no-delete-other-windows       t
-          treemacs-project-follow-cleanup        nil
-          treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-          treemacs-position                      'left
-          treemacs-recenter-distance             0.1
-          treemacs-recenter-after-file-follow    nil
-          treemacs-recenter-after-tag-follow     nil
-          treemacs-recenter-after-project-jump   'always
-          treemacs-recenter-after-project-expand 'on-distance
-          treemacs-show-cursor                   nil
-          treemacs-show-hidden-files             t
-          treemacs-silent-filewatch              nil
-          treemacs-silent-refresh                nil
-          treemacs-sorting                       'alphabetic-asc
-          treemacs-space-between-root-nodes      t
-          treemacs-tag-follow-cleanup            t
-          treemacs-tag-follow-delay              1.5
-          treemacs-user-mode-line-format         nil
-          treemacs-user-header-line-format       nil
-          treemacs-width                         35
-          treemacs-workspace-switch-cleanup      nil)
-
-    ;; The default width and height of the icons is 22 pixels. If you are
-    ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
-
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode t)
-    (pcase (cons (not (null (executable-find "git")))
-                 (not (null treemacs-python-executable)))
-      (`(t . t)
-       (treemacs-git-mode 'deferred))
-      (`(t . _)
-       (treemacs-git-mode 'simple))))
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
-
-;;(use-package treemacs-projectile
-;;  :after treemacs projectile
-;;  :ensure t)
-
-;;(use-package treemacs-icons-dired
-;;  :after treemacs dired
-;;  :ensure t
-;;  :config (treemacs-icons-dired-mode))
-
-;;(use-package treemacs-magit
-;;  :after treemacs magit
-;;  :ensure t)
-
-;;(use-package treemacs-persp ;;treemacs-persective if you use perspective.el vs. persp-mode
-;;  :after treemacs persp-mode ;;or perspective vs. persp-mode
-;;  :ensure t
-;;  :config (treemacs-set-scope-type 'Perspectives))
-
-;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-(setq lsp-keymap-prefix "s-l")
-
-(use-package lsp-mode
-    :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-           (c-mode . lsp)
-	   (c++-mode . lsp)
-            ;; if you want which-key integration
-            (lsp-mode . lsp-enable-which-key-integration))
-    :commands lsp)
-
-;; config set by GUI
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(base16-material-darker))
- '(custom-safe-themes
-   '("196df8815910c1a3422b5f7c1f45a72edfa851f6a1d672b7b727d9551bb7c7ba" "24714e2cb4a9d6ec1335de295966906474fdb668429549416ed8636196cb1441" default))
  '(package-selected-packages
-   '(magit use-package treemacs-projectile treemacs-magit treemacs-icons-dired rainbow-mode quelpa minimap lsp-mode highlight-indent-guides dracula-theme all-the-icons)))
+   '(dooms-themes markdown-mode minimap rainbow-mode use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(minimap-active-region-background ((t (:extend t :background "#44475A")))))
+ )
