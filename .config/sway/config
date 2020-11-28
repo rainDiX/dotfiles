@@ -362,10 +362,16 @@ bindsym $mod+semicolon exec ~/.local/scripts/splatmoji/splatmoji copy
 bindsym XF86Search exec nautilus --new-window
 bindsym $mod+escape exec $term htop
 
-# Wofi scripts
+# Rofi scripts
 #
 bindsym $mod+u exec rofi-udisks mount
 bindsym $mod+Shift+U exec rofi-udisks unmount
+
+## Bar
+bar {
+    swaybar_command waybar
+}
+
 
 
 ## Autostart
@@ -373,8 +379,9 @@ bindsym $mod+Shift+U exec rofi-udisks unmount
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #exec /usr/lib/xdg-desktop-portal -r & /usr/lib/xdg-desktop-portal-wlr
 exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
-exec redshift-gtk -b 1.0:0.8 -l 43.0:1.45
 exec xsettingsd
+# autostart applications via xdg via dex
+exec dex -a
 
 # Machine specific settings like wallpaper, output & some input configurations are in config.local
 include $HOME/.config/sway/config.local
