@@ -54,14 +54,16 @@ for_window [app_id="xdg-desktop-portal-gtk"] floating enable
 for_window [app_id="floating-foot"] floating enable
 for_window [title="About Mozilla Firefox"] floating enable
 for_window [title="Firefox - Sharing Indicator"] floating enable
+# Enable floating for Picture in picture mode of chromium & firefox
 for_window [title="Picture-in-Picture"] floating enable
-for_window [title="Copying — Dolphin"] floating enable
+for_window [title="Picture-in-picture"] floating enable
 # File picker for apps that doesn't use gtk-portal
 for_window [title="Select file"] floating enable
 for_window [title="Select folder"] floating enable
 for_window [title="Extract archive"] floating enable
 for_window [title="Extract"] floating enable
 for_window [title="File Operation Progress"] floating enable
+for_window [title="Copying — Dolphin"] floating enable
 # Lutris
 for_window [title="Select an EXE or MSI file"] floating enable
 # Nemo pop-up
@@ -220,12 +222,12 @@ bindsym $mod+Shift+rightsinglequotemark move container to workspace $ws8
 
 
 workspace $ws1 output eDP-1
-workspace $ws2 output eDP-1
 workspace $ws3 output eDP-1
-workspace $ws4 output eDP-1
-workspace $ws5 output HDMI-A-1
+workspace $ws5 output eDP-1
+workspace $ws7 output eDP-1
+workspace $ws2 output HDMI-A-1
+workspace $ws4 output HDMI-A-1
 workspace $ws6 output HDMI-A-1
-workspace $ws7 output HDMI-A-1
 workspace $ws8 output HDMI-A-1
 #workspace $ws9 output HDMI-A-1
 #workspace $ws10 output HDMI-A-1
@@ -369,8 +371,7 @@ bindsym $mod+Shift+U exec rofi-udisks unmount
 ## Autostart
 ##
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-#exec pulseaudio --start
-exec /usr/lib/xdg-desktop-portal -r & /usr/lib/xdg-desktop-portal-wlr
+#exec /usr/lib/xdg-desktop-portal -r & /usr/lib/xdg-desktop-portal-wlr
 exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 exec redshift-gtk -b 1.0:0.8 -l 43.0:1.45
 exec xsettingsd

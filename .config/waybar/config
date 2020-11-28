@@ -17,19 +17,19 @@
             "all-outputs": false,
             "format": "{icon}", //{name},
             "format-icons": {
-                "1": "一",
-                "2": "二",
-                "3": "三",
-                "4": "四",
-                "5": "五",
-                "6": "六",
-                "7": "七",
-                "8": "八",
-                "9": "九",
-                "10": "十",
+//                "1": "一",
+//                "2": "二",
+//                "3": "三",
+//                "4": "四",
+//                "5": "五",
+//                "6": "六",
+//                "7": "七",
+//                "8": "八",
+//                "9": "九",
+//                "10": "十",
                 "urgent": "",
-                "focused": "",
-                "default": ""
+                "focused": "",
+                "default": ""
             }
         },
         "sway/window": {
@@ -117,7 +117,7 @@
         },
         "custom/menu": {
             "format": "",
-            "on-click": "rofi -show drun",
+            "on-click": "rofi -theme launcher -show drun",
             "tooltip": false
         },
         "custom/powermenu": {
@@ -149,19 +149,19 @@
             "all-outputs": false,
             "format": "{icon}", //{name},
             "format-icons": {
-                "1": "一",
-                "2": "二",
-                "3": "三",
-                "4": "四",
-                "5": "五",
-                "6": "六",
-                "7": "七",
-                "8": "八",
-                "9": "九",
-                "10": "十",
+//                "1": "一",
+//                "2": "二",
+//                "3": "三",
+//                "4": "四",
+//                "5": "五",
+//                "6": "六",
+//                "7": "七",
+//                "8": "八",
+//                "9": "九",
+//                "10": "十",
                 "urgent": "",
-                "focused": "",
-                "default": ""
+                "focused": "",
+                "default": ""
             }
         },
         "sway/window": {
@@ -209,7 +209,7 @@
         },
         "custom/menu": {
             "format": "",
-            "on-click": "rofi -show drun",
+            "on-click": "rofi -theme launcher -show drun",
             "tooltip": false
         }
     }
