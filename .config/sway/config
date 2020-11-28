@@ -146,7 +146,7 @@ input "1386:890:Wacom_One_by_Wacom_S_Pen" {
     bindsym $mod+p exec ~/.local/scripts/change_layout.sh
 
 # exit sway (logs you out of your Wayland session)
-bindsym $mod+Shift+e exec wlogout -b 5 -m 400 -p layer-shell
+bindsym $mod+Shift+e exec rofi-powermenu
 
 #
 # Moving around:

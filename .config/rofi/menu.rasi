@@ -12,7 +12,7 @@ configuration {
     location: 0;
     yoffset: 0;
     xoffset: 0;
-    columns: 2;
+    columns: 1;
     fake-transparency: false;
     hide-scrollbar: true;
     show-icons: true;
@@ -23,7 +23,8 @@ configuration {
 @import "colors.rasi"
 
 #window {
-  height: 600px;
+    height: 400px;
+    width: 800px;
   padding: 20px 20px;
 }
 
