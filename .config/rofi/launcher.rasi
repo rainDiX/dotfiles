@@ -1,0 +1,78 @@
+/*
+ * User: Raimu
+ * Copyright : Public Domain ;-)
+*/
+configuration {
+    drun-display-format: "{icon} {name}";
+    display-drun: "Applications";
+    display-run: "Commands";
+    display-ssh: "SSH Connections";
+    show-icons: true;
+    icon-theme: "Papirus";
+    location: 0;
+    yoffset: 0;
+    xoffset: 0;
+    columns: 2;
+    fake-transparency: false;
+    hide-scrollbar: true;
+    show-icons: true;
+    sidebar-mode: true;
+    font: "Roboto 12";
+}
+
+@import "colors.rasi"
+
+#window {
+  height: 512px;
+  padding: 20px 20px;
+}
+
+* {
+  background-color: @background;
+  text-color: @foreground;
+  font: @text-font;
+}
+
+#inputbar {
+  background-color: @background;
+  display-drun: "Applications";
+}
+
+#prompt {
+  padding: 10px;
+  background-color: @accent;
+  text-color: @background;
+}
+
+
+#entry {
+  text-color: @accent;
+  padding: 10px 5px;
+}
+
+
+#element {
+  padding: 10px;
+  margin: 4px;
+  border: 0 0 0 5px solid;
+  background-color: @background;
+  border-color: @background;
+}
+
+#element.selected {
+  background-color: @background-selected;
+  text-color: @accent;
+  border-color: @accent;
+}
+
+#element-icon {
+  size: 3.5ch;
+}
+
+#button {
+  border: 4px solid 0 0 0;
+}
+#button.selected {
+  border-color: @accent;
+}
+
