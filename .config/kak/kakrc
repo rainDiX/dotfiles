@@ -2,7 +2,7 @@ source "%val{config}/plugins/plug.kak/rc/plug.kak"
 
 #--General options-------------------------------------------------------------#
 set-option global indentwidth 4
-colorscheme ayu-dark
+colorscheme monokai-remix
 
 #--Highlighters----------------------------------------------------------------#
 add-highlighter global/ number-lines -relative -hlcursor -separator '│'

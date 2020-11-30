@@ -20,7 +20,8 @@
 
 ;; Default font
 (set-face-attribute 'default nil :font "Fantasque Sans Mono 12")
-(set-fontset-font "fontset-default" 'unicode "Noto Color Emoji" nil 'prepend)
+;; And Emojis 🤟
+(set-fontset-font "fontset-default" 'unicode "Noto Color Emoji")
 
 ;; Startup directly into a scratch buffer
 (setq inhibit-startup-message t
@@ -74,14 +75,19 @@
   (doom-themes-visual-bell-config)
   )
 
+;; customization of the default emacs tabline
+(use-package tab-line
+  :straight nil
+  :hook (after-init . global-tab-line-mode))
+
 ;; A minimap like every other modern editors
 (use-package minimap
-  :config
-  (setq minimap-window-location 'right
-        minimap-update-delay 0
-        minimap-width-fraction 0.09
-        minimap-minimum-width 15
-	minimap-highlight-line nil)
+  :custom
+  (minimap-window-location 'right)
+  (minimap-update-delay 0)
+  (minimap-width-fraction 0.09)
+  (minimap-minimum-width 15)
+  (minimap-highlight-line nil)
   :hook (prog-mode . minimap-mode))
 
 (use-package ligature
