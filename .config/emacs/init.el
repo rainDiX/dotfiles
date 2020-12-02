@@ -12,7 +12,7 @@
 
 (setq visible-bell t)
 
-(global-hl-line-mode 1)
+;; (global-hl-line-mode 1)
 
 ;; reduce the frequency of garbage collection
 ;; GC each 64MB of allocated data (the default is on every 0.76MB)
@@ -38,6 +38,11 @@
 ;; make the delete key behave like a a forward looking version of backspace
 (global-set-key [delete] 'delete-char)
 (global-set-key [M-delete] 'kill-word)
+
+;; custom functions
+(defun my-highlight-line-on () (global-hl-line-mode 1))
+(defun my-highlight-line-off () (global-hl-line-mode 0))
+
 
 ;; Bootstrap code for straight.el
 (defvar bootstrap-version)
@@ -66,28 +71,58 @@
 (setq straight-use-package-by-default t)
 
 ;; Packages
-(use-package doom-themes
-  :config
-  (setq doom-themes-enable-bold t
-	doom-themes-enable-italic t)
-  (load-theme 'doom-molokai t)
 
-  (doom-themes-visual-bell-config)
+;; Efficient modal editing
+(use-package xah-fly-keys
+  :config
+  (xah-fly-keys-set-layout "azerty")
+  (define-key xah-fly-insert-map (kbd "ESC") 'xah-fly-command-mode-activate)
+  (xah-fly-keys 1)
+  :init
+  (add-hook 'xah-fly-command-mode-activate-hook 'my-highlight-line-off)
+  (add-hook 'xah-fly-insert-mode-activate-hook  'my-highlight-line-on))
+
+
+;; (use-package doom-themes
+;;   :config
+;;   (setq doom-themes-enable-bold t
+;; 	doom-themes-enable-italic t)
+;;   (load-theme 'doom-molokai t)
+
+;;   (doom-themes-visual-bell-config)
+;;   )
+
+(use-package kaolin-themes
+  :config
+  (load-theme 'kaolin-aurora t)
   )
 
-;; customization of the default emacs tabline
-(use-package tab-line
-  :straight nil
-  :hook (after-init . global-tab-line-mode))
+
+;; Better Tabs
+(use-package centaur-tabs
+  :demand
+  :custom
+  (centaur-tabs-style "bar")
+  (centaur-tabs-set-bar 'left)
+  (centaur-tabs-set-modified-marker t)
+  (centaur-tabs-modified-marker "●")
+  :config
+  (centaur-tabs-mode t)
+  :bind
+  ("C-<prior>" . centaur-tabs-backward)
+  ("C-<next>" . centaur-tabs-forward))
+
 
 ;; A minimap like every other modern editors
 (use-package minimap
   :custom
+  (minimap-width-fraction 0.05)
   (minimap-window-location 'right)
   (minimap-update-delay 0)
-  (minimap-width-fraction 0.09)
   (minimap-minimum-width 15)
   (minimap-highlight-line nil)
+  :init
+
   :hook (prog-mode . minimap-mode))
 
 (use-package ligature
@@ -272,17 +307,3 @@
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(dooms-themes markdown-mode minimap rainbow-mode use-package)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
