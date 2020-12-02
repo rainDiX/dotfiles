@@ -1,7 +1,8 @@
 #!/bin/bash
 FILE="${NAUTILUS_SCRIPT_SELECTED_FILE_PATHS%?}"
 if [ $(xdg-mime query filetype "$FILE" | cut -d '/' -f 1) = "image" ];then
-    OUTPUT=$(swaymsg -t get_outputs | jq -r '.[].name')
+    # OUTPUT=$(swaymsg -t get_outputs | jq -r '.[].name')
+    OUTPUT="$(wlr-randr | grep -o '^[A-Za-z\-]*-[0-9]')"
     if [ $(echo "$OUTPUT" | wc -w ) != "1" ];then
         OUTPUT=$(echo "$OUTPUT" | rofi -dmenu -p '>')
     fi
@@ -10,6 +11,6 @@ if [ $(xdg-mime query filetype "$FILE" | cut -d '/' -f 1) = "image" ];then
             mkdir -p ~/.local/share/backgrounds
         fi
         cp "${FILE}" ~/.local/share/backgrounds/"$OUTPUT"
-      swaymsg output "$OUTPUT" bg ~/.local/share/backgrounds/"$OUTPUT" fill
+      swaybg -o "$OUTPUT" -i ~/.local/share/backgrounds/"$OUTPUT" -m fill
     fi
 fi
