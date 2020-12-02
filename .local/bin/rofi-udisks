@@ -40,7 +40,7 @@ elif [ "${1}" = 'unmount'  ]; then
 		label=$(udisksctl info -b "$disk" | grep IdLabel | cut -d ':' -f 2 | tr -d ' \n')
 		DISKLIST=$DISKLIST$disk' : '$label'\n'
 	done
-	DISK=$(echo -e "$DISKLIST" | grep -v sda | rofi -dmenu -p -i 'unmount' -theme menu | cut -d ":" -f 1)
+	DISK=$(echo -e "$DISKLIST" | grep -v sda | rofi -dmenu -i -p 'unmount' -theme menu | cut -d ":" -f 1)
 	[ -z $DISK ] && exit 0 
 	udisksctl unmount -b $DISK && notify-send "udisksctl" "The drive can now be safely removed" \
 		|| notify-send -u critical "udisksctl" "Error unmounting the drive"
