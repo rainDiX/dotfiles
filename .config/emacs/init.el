@@ -82,21 +82,13 @@
   (add-hook 'xah-fly-command-mode-activate-hook 'my-highlight-line-off)
   (add-hook 'xah-fly-insert-mode-activate-hook  'my-highlight-line-on))
 
-
-;; (use-package doom-themes
-;;   :config
-;;   (setq doom-themes-enable-bold t
-;; 	doom-themes-enable-italic t)
-;;   (load-theme 'doom-molokai t)
-
-;;   (doom-themes-visual-bell-config)
-;;   )
+(use-package all-the-icons)
 
 (use-package kaolin-themes
   :config
   (load-theme 'kaolin-aurora t)
+  (kaolin-treemacs-theme)
   )
-
 
 ;; Better Tabs
 (use-package centaur-tabs
@@ -116,14 +108,34 @@
 ;; A minimap like every other modern editors
 (use-package minimap
   :custom
-  (minimap-width-fraction 0.05)
+  (minimap-width-fraction 0.08)
   (minimap-window-location 'right)
   (minimap-update-delay 0)
   (minimap-minimum-width 15)
   (minimap-highlight-line nil)
-  :init
-
+  :custom-face
+  (minimap-active-region-background ((t (:background "#252D35"))))
   :hook (prog-mode . minimap-mode))
+
+(use-package telephone-line
+  :custom
+  (telephone-line-primary-left-separator 'telephone-line-cubed-left)
+  (telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left)
+  (telephone-line-primary-right-separator 'telephone-line-cubed-right)
+  (telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
+  (telephone-line-height 24)
+  (telephone-line-lhs
+        '((evil   . (telephone-line-xah-fly-keys-segment))
+          (nil    . (telephone-line-minor-mode-segment))
+          (accent . (telephone-line-vc-segment
+                     telephone-line-process-segment))
+          (nil    . (telephone-line-buffer-segment))))
+  (telephone-line-rhs
+        '((nil    . (telephone-line-misc-info-segment))
+          (accent . (telephone-line-major-mode-segment))
+          (nil    . (telephone-line-airline-position-segment))))
+  :config
+  (telephone-line-mode 1))
 
 (use-package ligature
   :straight (:host github
