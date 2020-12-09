@@ -1,0 +1,53 @@
+#!/bin/bash
+
+if [ "${1}" = 'mount' ]; then
+	DISKLIST=""
+	for disk in /dev/sd[b-z] /dev/sd[a-z][a-z]; do
+		if test -b "$disk"; then
+			if [ "$(udisksctl info -b "$disk"| grep IdUsage | cut -d : -f 2 | tr -d ' \n')" = 'filesystem' ] \
+			&& test -z "$(mount | grep "$disk")" ; then
+				label=$(udisksctl info -b "$disk" | grep IdLabel | cut -d : -f2 | tr -d ' \n')
+				DISKLIST=${DISKLIST}${disk}' : '${label}'\n'
+			fi
+			for partition in "$disk"[1-9] "$disk"[0-9][0-9]; do
+				if test -b "$partition" \
+					&& [ "$(udisksctl info -b "$partition" | grep IdUsage | cut -d : -f 2 | tr -d ' \n')" = 'filesystem' ] \
+					&& test -z "$(mount | grep  "$partition" )";  then
+					label=$(udisksctl info -b "$partition" | grep IdLabel | cut -d : -f2 | tr -d ' \n')
+					DISKLIST=${DISKLIST}${partition}' : '${label}'\n'
+				fi
+			done
+		fi
+	done
+	DISK=$(echo -e "$DISKLIST" | rofi -dmenu -p 'mount' -i -theme menu | cut -d ":" -f 1)
+	echo "$DISK" 
+	FILESYSTEM=$(udisksctl info -b $DISK | grep IdType | cut -d : -f 2 | tr -d ' \n')
+	if test -n "$DISK"; then
+		case $FILESYSTEM in 
+			ntfs|exfat)
+				udisksctl mount -b $DISK -o dmask=0022,fmask=0133 && notify-send "udisksctl" "The drive is now mounted" \
+					|| notify-send -u critical "udisksctl" "Error mounting the drive"
+				;;
+			*)
+				udisksctl mount -b $DISK && notify-send "udisksctl" "The drive is now mounted" \
+					|| notify-send -u critical "udisksctl" "Error mounting the drive"
+				;;
+		esac
+	fi
+elif [ "${1}" = 'unmount'  ]; then
+	_DISKLIST=$(grep /dev/sd /proc/mounts | cut -d " " -f 1)
+	for disk in $_DISKLIST; do
+		label=$(udisksctl info -b "$disk" | grep IdLabel | cut -d ':' -f 2 | tr -d ' \n')
+		DISKLIST=$DISKLIST$disk' : '$label'\n'
+	done
+	DISK=$(echo -e "$DISKLIST" | grep -v sda | rofi -dmenu -i -p 'unmount' -theme menu | cut -d ":" -f 1)
+	[ -z $DISK ] && exit 0 
+	udisksctl unmount -b $DISK && notify-send "udisksctl" "The drive can now be safely removed" \
+		|| notify-send -u critical "udisksctl" "Error unmounting the drive"
+	udisksctl power-off -b $DISK
+
+else
+  echo "Usage: ${0} [unmount|mount]"
+  echo 'A silly script to quickly mount or unmount a drive via rofi using udisks2'
+  exit 1
+fi

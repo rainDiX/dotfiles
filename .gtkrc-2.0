@@ -1,6 +1,6 @@
 gtk-cursor-theme-size=25
 gtk-cursor-theme-name="xcursor-chromeos"
-gtk-icon-theme-name="Breeze_Dark_RC"
+gtk-icon-theme-name="korla"
 gtk-font-name="Roboto,  10"
 gtk-theme-name="Sweet-Dark"
 gtk-enable-animations=1

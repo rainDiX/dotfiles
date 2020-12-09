@@ -19,7 +19,7 @@
 (setq gc-cons-threshold 64000000)
 
 ;; Default font
-(set-face-attribute 'default nil :font "Fantasque Sans Mono 12")
+(set-face-attribute 'default nil :font "Iosevka 11")
 ;; And Emojis 🤟
 (set-fontset-font "fontset-default" 'unicode "Noto Color Emoji")
 
@@ -144,12 +144,13 @@
   ;; Enable traditional ligature support in eww-mode, if the
   ;; `variable-pitch' face supports it
   (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-  ;; Enable all Fantasque ligatures in programming modes
-  (ligature-set-ligatures 'prog-mode '("<<" ">>" "&&" "||" "//" "/*" "*/" "/**/" "|||>" "||>" "|>"
-				       "==" "===" "==>" "=>" "=>>" "=<<" "=/=" "!=" "!==" ">=" ">=>"
-                                       ">>=" ">>-" ">-" ">->" "->" "->>" "-->" "-<" "-<<" "<|" "<||"
-                                       "<|||" "<|>" "<=" "<==" "<=>" "<=<" "<!--" "<>" "<-" "<->"
-				       "<--" "<-<" "<<=" "<<-" "<~" "<~>" "<~~" "~>" "~~" "~~>"))
+  ;; Enable all Iosevka ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("-<<" "-<" "-<-" "<--" "<---" "<<-" "<-" "->" "->>" "-->" "--->" "->-" ">-" ">>-"
+				       "=<<" "=<" "=<=" "<==" "<===" "<<=" "<=" "=>" "=>>" "==>" "===>" "=>=" ">=" ">>="
+				       "<->" "<-->" "<--->" "<---->" "<=>" "<==>" "<===>" "<====>" "-------->"
+				       "<~~" "<~" "~>" "~~>" "::" ":::" "==" "!=" "/=" "~=" "<>" "===" "!==" "=/=" "=!="
+				       ":=" ":-" ":+" "<*" "<*>" "*>" "<|" "<|>" "|>" "<." "<.>" ".>" "+:" "-:" "=:" ":>"
+				       "(* comm *)" "++" "+++" "\\/" "/\\" "|-" "-|" "<!--" "<!---" "<***>"))
   ;; Enables ligature checks globally in all buffers. You can also do it
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))

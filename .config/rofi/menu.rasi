@@ -17,7 +17,7 @@ configuration {
     hide-scrollbar: true;
     show-icons: true;
     sidebar-mode: true;
-    font: "Roboto 12";
+    font: "Roboto 12, Symbols Nerd Font 12";
 }
 
 @import "colors.rasi"
