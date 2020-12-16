@@ -43,4 +43,4 @@ fi
 # remove the last useless \n
 tooltip=${tooltip%???}
 
-echo '{"text": "'$text'", "tooltip": "'$tooltip'", "percentage": '$percentage' }'
+printf "{\"text\": \"$text\", \"tooltip\": \"$tooltip\", \"percentage\": \"$percentage\" }"
