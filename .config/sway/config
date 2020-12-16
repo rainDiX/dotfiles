@@ -1,0 +1,388 @@
+# This config file was written by Raimu
+# This file is written for a french AZERTY keyboard
+# Feel free to copy it and modify whatever you want
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+# no titlebar and 1 pixel border on windows
+default_border pixel 1
+#default_border none
+
+## Window style 
+#
+font pango:mononoki 10
+
+# class                 border  bground text    indicator child_border
+client.focused          #5294E2 #5294E2 #F8F8F2 #56ADBC   #5294E2
+client.focused_inactive #333333 #5F676A #F8F8F2 #484E50   #5F676A
+client.unfocused        #333333 #222222 #999995 #292D2E   #222222
+client.urgent           #2F343A #F92672 #F8F8F2 #66D9EF   #F92672
+client.placeholder      #1B1D1E #0C0C0C #F8F8F2 #000000   #0C0C0C
+# xcursor
+seat seat0 xcursor_theme xcursor-chromeos 24
+gaps outer 3
+gaps inner 6
+smart_gaps on
+
+#
+# Workspaces:
+#
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3" 
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8" 
+#set $ws9 "9" 
+#set $ws10 "10" 
+
+#
+# Windows rules
+#
+#assign [app_id="telegram-desktop"] → $ws10
+# Misc apps with pop-up I want floating
+#
+for_window [app_id="menu"] floating enable
+for_window [app_id="qalculate-gtk"] floating enable
+for_window [app_id="desktopclient.nextcloud.com.nextcloud"] floating enable
+for_window [app_id="com.nextcloud.desktopclient.nextcloud"] floating enable
+for_window [app_id="desktopclient.owncloud.com.owncloud"] floating enable
+for_window [app_id="xdg-desktop-portal-gtk"] floating enable
+for_window [app_id="floating-foot"] floating enable
+for_window [title="About Mozilla Firefox"] floating enable
+for_window [title="Firefox - Sharing Indicator"] floating enable
+# Enable floating for Picture in picture mode of chromium & firefox
+for_window [title="Picture-in-Picture"] floating enable
+for_window [title="Picture-in-picture"] floating enable
+# File picker for apps that doesn't use gtk-portal
+for_window [title="Select file"] floating enable
+for_window [title="Select folder"] floating enable
+for_window [title="Extract archive"] floating enable
+for_window [title="Extract"] floating enable
+for_window [title="File Operation Progress"] floating enable
+for_window [title="Copying — Dolphin"] floating enable
+# Lutris
+for_window [title="Select an EXE or MSI file"] floating enable
+# Nemo pop-up
+#for_window [title="nemo" app_id="nemo"] floating enable
+for_window [title="Properties" app_id="nemo"] floating enable
+for_window [class="Etterna"] fullscreen enable
+for_window [app_id="osu!"] fullscreen enable
+
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+# Terminal emulator
+set $term foot
+# Application launcher
+set $menu rofi -theme launcher -show drun
+
+
+### Input configuration
+#
+    input type:keyboard {
+        repeat_delay 500
+        repeat_rate 30
+        xkb_layout fr,gb
+        xkb_variant afnor,
+        xkb_options grp:ctrls_toggle,caps:menu,shift:both_capslock_cancel
+    }
+
+#
+   input type:touchpad {
+	#events disabled
+	accel_profile adaptive
+	pointer_accel 0.1
+	dwt enabled
+	tap enabled
+	natural_scroll enabled
+	middle_emulation enabled
+   }
+
+   input "1118:1954:Microsoft_Sculpt_Comfort_Mouse" {
+       	scroll_factor 2.0
+   }
+
+## Wacom config for when I play osu!
+## The rectangle is relative to the top left corner 
+input "1386:890:Wacom_One_by_Wacom_S_Pen" {
+#	map_to_output HDMI-A-1
+#	# rectange of ~ 9cm x 5.5cm on my tablet 
+	#map_from_region 0.25x0.25 0.75x0.75	
+#	# rectange from top left corner 
+#	# map_from_region 0.0x0.0 0.4x0.4	
+#	# rectange of ~ 4.5cm x 2.5cm on my tablet 
+#	map_from_region 0.3x0.3 0.6x0.6	
+}
+
+### Key bindings
+#
+# Basics:
+#
+    # start a terminal
+    bindsym $mod+Return exec $term
+
+    # kill focused window
+    bindsym $mod+Shift+q kill
+
+    # start your launcher
+    bindsym $mod+Shift+Return exec $menu
+
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $mod normal
+
+    # reload the configuration file
+    bindsym $mod+Shift+c reload
+
+    # Change the layout
+    bindsym $mod+p exec ~/.local/scripts/change_layout.sh
+
+# exit sway (logs you out of your Wayland session)
+bindsym $mod+Shift+e exec rofi-powermenu
+
+#
+# Moving around:
+#
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+    # or use $mod+[up|down|left|right]
+#    bindsym $mod+Left focus left
+#    bindsym $mod+Down focus down
+#    bindsym $mod+Up focus up
+#    bindsym $mod+Right focus right
+
+    # _move_ the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+    # ditto, with arrow keys
+#    bindsym $mod+Shift+Left move left
+#    bindsym $mod+Shift+Down move down
+#    bindsym $mod+Shift+Up move up
+#    bindsym $mod+Shift+Right move right
+
+
+# switch to workspace
+workspace_auto_back_and_forth yes
+#bindsym $mod+ampersand workspace $ws1
+#bindsym $mod+eacute workspace $ws2
+#bindsym $mod+quotedbl workspace $ws3
+#bindsym $mod+apostrophe workspace $ws4
+#bindsym $mod+parenleft workspace $ws5
+#bindsym $mod+minus workspace $ws6
+#bindsym $mod+egrave workspace $ws7
+#bindsym $mod+underscore workspace $ws8
+#bindsym $mod+ccedilla workspace $ws9
+#bindsym $mod+agrave workspace $ws10
+# move focused container to workspace
+#bindsym $mod+Shift+ampersand move container to workspace $ws1
+#bindsym $mod+Shift+eacute move container to workspace $ws2
+#bindsym $mod+Shift+quotedbl move container to workspace $ws3
+#bindsym $mod+Shift+apostrophe move container to workspace $ws4
+#bindsym $mod+Shift+parenleft move container to workspace $ws5
+#bindsym $mod+Shift+minus move container to workspace $ws6
+#bindsym $mod+Shift+egrave move container to workspace $ws7
+#bindsym $mod+Shift+underscore move container to workspace $ws8
+#bindsym $mod+Shift+ccedilla move container to workspace $ws9
+#bindsym $mod+Shift+agrave move container to workspace $ws10
+
+# designed for AZERTY afnor variant
+bindsym $mod+agrave workspace $ws1
+bindsym $mod+eacute workspace $ws2
+bindsym $mod+egrave workspace $ws3
+bindsym $mod+ecircumflex workspace $ws4
+bindsym $mod+parenleft workspace $ws5
+bindsym $mod+parenright workspace $ws6
+bindsym $mod+leftsinglequotemark workspace $ws7
+bindsym $mod+rightsinglequotemark workspace $ws8
+#bindsym $mod+guillemotleft workspace $ws9
+#bindsym $mod+guillemotright workspace $ws10
+bindsym $mod+Shift+agrave move container to workspace $ws1
+bindsym $mod+Shift+eacute move container to workspace $ws2
+bindsym $mod+Shift+egrave move container to workspace $ws3
+bindsym $mod+Shift+ecircumflex move container to workspace $ws4
+bindsym $mod+Shift+parenleft move container to workspace $ws5
+bindsym $mod+Shift+parenright move container to workspace $ws6
+bindsym $mod+Shift+leftsinglequotemark move container to workspace $ws7
+bindsym $mod+Shift+rightsinglequotemark move container to workspace $ws8
+#bindsym $mod+Shift+guillemotleft move container to workspace $ws9
+#bindsym $mod+Shift+guillemotright move container to workspace $ws10
+
+
+workspace $ws1 output eDP-1
+workspace $ws3 output eDP-1
+workspace $ws5 output eDP-1
+workspace $ws7 output eDP-1
+workspace $ws2 output HDMI-A-1
+workspace $ws4 output HDMI-A-1
+workspace $ws6 output HDMI-A-1
+workspace $ws8 output HDMI-A-1
+#workspace $ws9 output HDMI-A-1
+#workspace $ws10 output HDMI-A-1
+
+#
+# Layout stuff:
+#
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    # respectively.
+    bindsym $mod+b splith
+    bindsym $mod+v splitv
+
+    # Switch the current container between different layout styles
+    bindsym $mod+e layout toggle split
+
+    # Switch the current container to a tabbed layout 
+    bindsym $mod+w layout tabbed
+
+    # Make the current focus fullscreen
+    bindsym $mod+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym $mod+Shift+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $mod+space focus mode_toggle
+
+    # move focus to the parent container
+    bindsym $mod+a focus parent
+
+    bindsym $mod+x exec killall -SIGUSR1 waybar
+#
+# Scratchpad:
+#
+
+    # Move the currently focused window to the scratchpad
+    bindsym $mod+Shift+m move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    bindsym $mod+m scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 20px
+    bindsym $down resize grow height 20px
+    bindsym $up resize shrink height 20px
+    bindsym $right resize grow width 20px
+
+    bindsym i resize shrink height 9px; resize shrink width 10px 
+    bindsym u resize grow width 16px; resize grow height 10px
+    
+    # ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+# VM mode without any keybiding to avoid collision 
+mode "VM (Press Mod+Shift+Enter to quit)" {
+    # return to default mode
+    bindsym $mod+Shift+Return mode "default"
+}
+
+bindsym $mod+r mode "resize"
+bindsym $mod+Shift+Escape mode "VM (Press Mod+Shift+Enter to quit)"
+
+# Screenshot
+
+bindsym --release Print exec swayshot save -o
+bindsym --release alt+Print exec swayshot save -r
+bindsym --release $mod+Print exec swayshot save -a
+bindsym --release $mod+alt+Print exec swayshot save -w
+bindsym --release Shift+Print exec swayshot copy -o
+bindsym --release alt+Shift+Print exec swayshot copy -r
+bindsym --release $mod+Shift+Print exec swayshot copy -a
+bindsym --release $mod+alt+Shift+Print exec swayshot copy -w
+
+# Screen brightness
+#
+bindsym XF86MonBrightnessUp exec pkexec /usr/bin/brillo -qA 1 && brillo -qG | cut -d . -f 1 > $SWAYSOCK.wob
+bindsym XF86MonBrightnessDown exec pkexec /usr/bin/brillo -qU 1 && brillo -qG | cut -d . -f 1 > $SWAYSOCK.wob
+
+bindsym alt+XF86MonBrightnessUp exec ddclight + 2 && ddclight > $SWAYSOCK.wob
+bindsym alt+XF86MonBrightnessDown exec ddclight - 2 && ddclight > $SWAYSOCK.wob
+
+#Keyboard brightness
+bindsym XF86KbdBrightnessUp exec pkexec /usr/bin/brillo -A 1 -rks dell::kbd_backlight
+bindsym XF86KbdBrightnessDown exec pkexec /usr/bin/brillo -U 1 -rks dell::kbd_backlight
+
+# Volume pulse
+bindsym XF86AudioRaiseVolume exec pamixer -ui 2 && pamixer --get-volume > $SWAYSOCK.wob
+bindsym XF86AudioLowerVolume exec pamixer -ud 2 && pamixer --get-volume > $SWAYSOCK.wob
+bindsym XF86AudioMute exec pamixer --toggle-mute && (pamixer·--get-mute && echo 0 > $SWAYSOCK.wob)
+bindsym XF86AudioMicMute exec --no-startup-id pamixer --default-source -t
+
+# Volume Plain Alsa
+#
+#bindsym XF86AudioRaiseVolume exec amixer -q set Master 2%+ unmute
+#bindsym XF86AudioLowerVolume exec amixer -q set Master 2%- unmute
+#bindsym XF86AudioMute exec (amixer get Master | grep off > /dev/null && amixer -q set Master unmute || (amixer -q set Master mute )
+
+# Media Control
+#
+bindsym XF86AudioPlay exec mediacontrol play-pause
+bindsym XF86AudioNext exec mediacontrol next
+bindsym XF86AudioPrev exec mediacontrol previous
+
+# Calculator key
+#
+bindsym XF86Calculator exec qalculate-gtk 
+
+# Lock the session
+#
+bindsym $mod+ctrl+l exec swaylock -f -c 330000F4
+
+# Emoji picker (^O^)
+#
+bindsym $mod+semicolon exec ~/.local/scripts/splatmoji/splatmoji copy
+
+# Program bindsym
+#
+bindsym XF86Search exec nautilus --new-window
+bindsym $mod+escape exec $term htop
+
+# Rofi scripts
+#
+bindsym $mod+u exec rofi-udisks mount
+bindsym $mod+Shift+U exec rofi-udisks unmount
+
+## Bar
+bar {
+    swaybar_command waybar
+}
+
+
+
+## Autostart
+##
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+#exec /usr/lib/xdg-desktop-portal -r & /usr/lib/xdg-desktop-portal-wlr
+exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
+exec xsettingsd
+# autostart applications via xdg via dex
+exec dex -a
+
+# Machine specific settings like wallpaper, output & some input configurations are in config.local
+include $HOME/.config/sway/config.local
+include /etc/sway/config.d/*
