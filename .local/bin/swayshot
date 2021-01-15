@@ -1,0 +1,89 @@
+#!/bin/sh
+
+filterInvalidWindowsCharacters() {
+	echo "$1" | sed 's/.//;s/.$//' | sed 's/[\/]/／/g' | sed 's/[\\]/／/g' | sed 's/[|]/¦/g' | sed "s/[\"]/''/g" | sed 's/[:]/﹕/g' | sed 's/[?]/？/g' | sed 's/[*]/＊/g' | sed 's/[>]/＞/g' | sed 's/[<]/＜/g'
+}
+
+printUsage() {
+    echo 'a screenshot helper for sway like grimshot'
+    echo 'Usage:'
+    echo "  $0 copy|save [ -w | -a | -r | -o ]"
+    echo 'Commands:'
+    echo '  copy: Copy the screenshot into the clipboard'
+    echo '  save: Save the screenshot into XDG_PICTURES_DIR/Screenshots'
+    echo 'When no options is given, all visible outputs are captured'
+    echo 'Options:'
+    echo '  -w'
+    echo '      Manually select a window'
+    echo '  -a'
+    echo '      Currently active window'
+    echo '  -r'
+    echo '      Manually select a region'
+    echo '  -o'
+    echo '      Currenlty active output'
+    echo 'Requierements:'
+    echo '  grim, slurp, swaymsg, jq, wl-copy, xdg-user-dir'
+}
+
+COMMAND=$1
+OPTION=$2
+
+if [ "$COMMAND" != "save" ] && [ "$COMMAND" != "copy" ]; then
+    printUsage
+    exit
+fi
+
+if [ -n "$OPTION" ] && [ "$OPTION" != "-w" ] && [ "$OPTION" != "-a" ] && [ "$OPTION" != "-r" ] && [ "$OPTION" != "-o" ]; then
+    printUsage
+    exit
+fi
+
+PICTURES=$(xdg-user-dir PICTURES)
+TARGETDIR=$PICTURES/Screenshots/$(date +"%Y-%m")
+NAME='Screenshot_of_'
+RECT=''
+OUTPUT=''
+
+if [ ! -d "$TARGETDIR" ]; then
+    mkdir -p "$TARGETDIR"
+fi
+
+if [ "$OPTION" = "-w" ]; then
+    RECT=$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)
+    # Check if user exited slurp without selecting the area
+    if [ -z "$RECT" ]; then
+        exit
+    fi
+elif [ "$OPTION" = "-a" ]; then
+  WINDOW=$(swaymsg -t get_tree | jq '.. | select(.focused?)')
+  NAME=$(echo "$WINDOW" | jq '.name' )
+  NAME=$(filterInvalidWindowsCharacters "$NAME" )
+  RECT=$(echo "$WINDOW" | jq -r '.rect | "\(.x),\(.y) \(.width)x\(.height)"')
+elif [ "$OPTION" = "-r" ]; then
+    RECT=$(slurp -d)
+    # Check if user exited slurp without selecting the area
+    if [ -z "$RECT" ]; then
+        exit
+    fi
+elif [ "$OPTION" = "-o" ]; then
+    OUTPUT=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused)' | jq -r '.name')
+fi
+
+if [ "$COMMAND" = 'copy' ]; then
+    if [ -n "$RECT" ]; then
+        grim -g "$RECT" - | wl-copy --type image/png
+    elif [ -n "$OUTPUT" ]; then
+        grim -o "$OUTPUT" - | wl-copy --type image/png
+    else
+        grim - | wl-copy --type image/png
+    fi
+else
+    if [ -n "$RECT" ]; then
+        grim -g "$RECT" "$TARGETDIR/${NAME}_$(date +%Y-%m-%d-%H.%M.%S).png"
+    elif [ -n "$OUTPUT" ]; then
+        grim -o "$OUTPUT" "$TARGETDIR/${NAME}_$(date +%Y-%m-%d-%H.%M.%S).png"
+    else
+        grim "$TARGETDIR/${NAME}_$(date +%Y-%m-%d-%H.%M.%S).png"
+    fi
+fi
+
