@@ -78,9 +78,10 @@ set $down j
 set $up k
 set $right l
 # Terminal emulator
-set $term foot
+set $term alacritty
 # Application launcher
-set $menu rofi -theme launcher -show drun
+#set $menu rofi -theme launcher -show drun
+set $menu wofi --show drun
 
 
 ### Input configuration
@@ -105,7 +106,7 @@ set $menu rofi -theme launcher -show drun
    }
 
    input "1118:1954:Microsoft_Sculpt_Comfort_Mouse" {
-       	scroll_factor 2.0
+       scroll_factor 2.0
    }
 
 ## Wacom config for when I play osu!
@@ -131,7 +132,7 @@ input "1386:890:Wacom_One_by_Wacom_S_Pen" {
     bindsym $mod+Shift+q kill
 
     # start your launcher
-    bindsym $mod+Shift+Return exec $menu
+    bindsym $mod+d exec $menu
 
     # Resize them with right mouse button + $mod.
     # Despite the name, also works for non-floating windows.
