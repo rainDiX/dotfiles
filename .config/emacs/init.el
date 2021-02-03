@@ -71,24 +71,12 @@
 (setq straight-use-package-by-default t)
 
 ;; Packages
-
-;; Efficient modal editing
-(use-package xah-fly-keys
-  :config
-  (xah-fly-keys-set-layout "azerty")
-  (define-key xah-fly-insert-map (kbd "ESC") 'xah-fly-command-mode-activate)
-  (xah-fly-keys 1)
-  :init
-  (add-hook 'xah-fly-command-mode-activate-hook 'my-highlight-line-off)
-  (add-hook 'xah-fly-insert-mode-activate-hook  'my-highlight-line-on))
-
 (use-package all-the-icons)
 
 (use-package kaolin-themes
   :config
   (load-theme 'kaolin-aurora t)
-  (kaolin-treemacs-theme)
-  )
+  (kaolin-treemacs-theme))
 
 ;; Better Tabs
 (use-package centaur-tabs
@@ -124,16 +112,15 @@
   (telephone-line-primary-right-separator 'telephone-line-cubed-right)
   (telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
   (telephone-line-height 24)
-  (telephone-line-lhs
-        '((evil   . (telephone-line-xah-fly-keys-segment))
-          (nil    . (telephone-line-minor-mode-segment))
-          (accent . (telephone-line-vc-segment
-                     telephone-line-process-segment))
-          (nil    . (telephone-line-buffer-segment))))
-  (telephone-line-rhs
-        '((nil    . (telephone-line-misc-info-segment))
-          (accent . (telephone-line-major-mode-segment))
-          (nil    . (telephone-line-airline-position-segment))))
+ ;; (telephone-line-lhs
+ ;;         (nil    . (telephone-line-minor-mode-segment))
+ ;;         (accent . (telephone-line-vc-segment
+ ;;                    telephone-line-process-segment))
+ ;;         (nil    . (telephone-line-buffer-segment))))
+ ;; (telephone-line-rhs
+ ;;       '((nil    . (telephone-line-misc-info-segment))
+ ;;         (accent . (telephone-line-major-mode-segment))
+ ;;         (nil    . (telephone-line-airline-position-segment))))
   :config
   (telephone-line-mode 1))
 
