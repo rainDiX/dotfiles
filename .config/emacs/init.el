@@ -1,5 +1,6 @@
 ;; enable nativecomp (gccemacs)
 (setq comp-deferred-compilation t)
+(setq warning-minimum-level :emergency)
 
 ;; Disable some interface elements
 (tool-bar-mode -1)
