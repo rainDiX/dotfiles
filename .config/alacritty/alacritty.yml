@@ -109,7 +109,7 @@ font:
     #   - (macOS) Menlo
     #   - (Linux) monospace
     #   - (Windows) Consolas
-    family: monospace
+    family: Iosevka
 
     # The `style` can be specified to pick a specific face.
     style: Regular
@@ -215,17 +215,6 @@ colors:
   
   # Normal colors 
   normal:
-    black:   '#424242'
-    red:     '#ff1e8e'
-    green:   '#8eff1e'
-    yellow:  '#ff8e1e'
-    blue:    '#1e8eff'
-    magenta: '#8e1eff'
-    cyan:    '#1eff8e'
-    white:   '#c2c2c2'
-
-  # Bright colors
-  bright:
     black:   '#363636'
     red:     '#ff0883'
     green:   '#83ff08'
@@ -234,6 +223,17 @@ colors:
     magenta: '#8308ff'
     cyan:    '#08ff83'
     white:   '#b6b6b6'
+
+  # Bright colors
+  bright:
+    black:   '#424242'
+    red:     '#ff1e8e'
+    green:   '#8eff1e'
+    yellow:  '#ff8e1e'
+    blue:    '#1e8eff'
+    magenta: '#8e1eff'
+    cyan:    '#1eff8e'
+    white:   '#c2c2c2'
 
   # Dim colors
   #
