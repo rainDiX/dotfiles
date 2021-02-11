@@ -53,7 +53,7 @@ input type:keyboard {
     xkb_options grp:ctrls_toggle,caps:ctrl_modifier,shift:both_capslock_cancel
 }
 input type:touchpad {
-    events disabled
+#    events disabled
     accel_profile adaptive
     pointer_accel 0.1
     dwt enabled
@@ -109,27 +109,28 @@ bindsym $mod+Shift+Right move right
 
 # switch to workspace
 workspace_auto_back_and_forth yes
+bindsym $mod+o move workspace to output left
 # Using bindcode to make it layout independant
-bindcode Mod4+10 workspace $ws1
-bindcode Mod4+11 workspace $ws2
-bindcode Mod4+12 workspace $ws3
-bindcode Mod4+13 workspace $ws4
-bindcode Mod4+14 workspace $ws5
-bindcode Mod4+15 workspace $ws6
-bindcode Mod4+16 workspace $ws7
-bindcode Mod4+17 workspace $ws8
-bindcode Mod4+18 workspace $ws9
-bindcode Mod4+19 workspace $ws10
-bindcode Mod4+Shift+10 move container to workspace $ws1
-bindcode Mod4+Shift+11 move container to workspace $ws2
-bindcode Mod4+Shift+12 move container to workspace $ws3
-bindcode Mod4+Shift+13 move container to workspace $ws4
-bindcode Mod4+Shift+14 move container to workspace $ws5
-bindcode Mod4+Shift+15 move container to workspace $ws6
-bindcode Mod4+Shift+16 move container to workspace $ws7
-bindcode Mod4+Shift+17 move container to workspace $ws8
-bindcode Mod4+Shift+18 move container to workspace $ws9
-bindcode Mod4+Shift+19 move container to workspace $ws10
+bindcode $mod+10 workspace $ws1
+bindcode $mod+11 workspace $ws2
+bindcode $mod+12 workspace $ws3
+bindcode $mod+13 workspace $ws4
+bindcode $mod+14 workspace $ws5
+bindcode $mod+15 workspace $ws6
+bindcode $mod+16 workspace $ws7
+bindcode $mod+17 workspace $ws8
+bindcode $mod+18 workspace $ws9
+bindcode $mod+19 workspace $ws10
+bindcode $mod+Shift+10 move container to workspace $ws1
+bindcode $mod+Shift+11 move container to workspace $ws2
+bindcode $mod+Shift+12 move container to workspace $ws3
+bindcode $mod+Shift+13 move container to workspace $ws4
+bindcode $mod+Shift+14 move container to workspace $ws5
+bindcode $mod+Shift+15 move container to workspace $ws6
+bindcode $mod+Shift+16 move container to workspace $ws7
+bindcode $mod+Shift+17 move container to workspace $ws8
+bindcode $mod+Shift+18 move container to workspace $ws9
+bindcode $mod+Shift+19 move container to workspace $ws10
 
 #
 # Layout stuff:
