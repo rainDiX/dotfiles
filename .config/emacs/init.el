@@ -1,10 +1,10 @@
-;; enable nativecomp (gccemacs)
-(setq comp-deferred-compilation t)
-(setq warning-minimum-level :emergency)
+;; This config file is made with emacs >=27 and gccemacs in mind
+;; I do not plan to support older versions
 
-;; Disable some interface elements
-(tool-bar-mode -1)
-(toggle-scroll-bar -1)
+;; Default font
+(set-face-attribute 'default nil :font "Iosevka 11")
+;; And Emojis 🤟 nico nico nii !!!
+(set-fontset-font "fontset-default" 'unicode "Noto Color Emoji")
 
 ;; Enable line number on prog mode
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
@@ -12,21 +12,8 @@
 (setq display-line-numbers-width-start t)
 
 (setq visible-bell t)
-
-;; (global-hl-line-mode 1)
-
-;; reduce the frequency of garbage collection
-;; GC each 64MB of allocated data (the default is on every 0.76MB)
-(setq gc-cons-threshold 64000000)
-
-;; Default font
-(set-face-attribute 'default nil :font "Iosevka 11")
-;; And Emojis 🤟
-(set-fontset-font "fontset-default" 'unicode "Noto Color Emoji")
-
-;; Startup directly into a scratch buffer
-(setq inhibit-startup-message t
-      inhibit-startup-echo-area-message t)
+(global-hl-line-mode 1)
+(setq column-number-mode t)
 
 (setq-default cursor-type 'bar)
 (show-paren-mode)
@@ -36,45 +23,66 @@
 (when (display-graphic-p)
   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
-;; make the delete key behave like a a forward looking version of backspace
+;; make the delete key behave like a forward looking version of backspace
 (global-set-key [delete] 'delete-char)
 (global-set-key [M-delete] 'kill-word)
 
-;; custom functions
-(defun my-highlight-line-on () (global-hl-line-mode 1))
-(defun my-highlight-line-off () (global-hl-line-mode 0))
-
-
-;; Bootstrap code for straight.el
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-;; install use-package with straight
-(straight-use-package 'use-package)
-(defvar straight-use-package-by-default)
-(setq straight-use-package-by-default t)
-
-;; disable package.el
-(setq package-enable-at-startup nil)
-
 ;; use use-package to install, load & configure packages
 (require 'use-package)
-(setq straight-use-package-by-default t)
+
+;; Built-in packages
+
+;; Put backup files in .cache directory
+(use-package files
+  :straight nil
+  :custom
+  (backup-by-copying t)
+  (create-lockfiles nil)
+  (backup-directory-alist
+   `(("." . ,(expand-file-name ".cache/backups" user-emacs-directory))))
+  (auto-save-file-name-transforms
+   `((".*" ,(expand-file-name ".cache/auto-save/" user-emacs-directory) t)))
+  :config
+  (let ((auto-save-dir (expand-file-name ".cache/auto-save/" user-emacs-directory)))
+    (unless (file-exists-p auto-save-dir)
+      (make-directory auto-save-dir))))
+
+;; accept with y or n instead of full yes or no
+(use-package subr
+  :no-require t
+  :straight nil
+  :init
+  (fset 'yes-or-no-p 'y-or-n-p))
+
+;; history between sessions
+(use-package savehist
+  :straight nil
+  :config (savehist-mode 1))
+
+;; disable lisp interaction buffer & remove the message
+(use-package startup
+  :no-require t
+  :straight nil
+  :custom
+  (initial-major-mode 'fundamental-mode)
+  (initial-scratch-message ""))
+
+;; Delete selection by typing
+(use-package delsel
+  :straight nil
+  :init
+  (delete-selection-mode t))
 
 ;; Packages
 (use-package all-the-icons)
 
 (use-package kaolin-themes
+  :custom
+  (kaolin-themes-bold t)
+  (kaolin-themes-italic t)
+  (kaolin-themes-underline t)
+  (kaolin-themes-italic-comments t)
+  (kaolin-themes-hl-line-colored t)
   :config
   (load-theme 'kaolin-aurora t)
   (kaolin-treemacs-theme))
@@ -93,37 +101,14 @@
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward))
 
-
-;; A minimap like every other modern editors
-(use-package minimap
+(use-package doom-modeline
+  :ensure t
   :custom
-  (minimap-width-fraction 0.08)
-  (minimap-window-location 'right)
-  (minimap-update-delay 0)
-  (minimap-minimum-width 15)
-  (minimap-highlight-line nil)
-  :custom-face
-  (minimap-active-region-background ((t (:background "#252D35"))))
-  :hook (prog-mode . minimap-mode))
+  (doom-modeline-minor-modes t)
+  :init (doom-modeline-mode 1))
 
-(use-package telephone-line
-  :custom
-  (telephone-line-primary-left-separator 'telephone-line-cubed-left)
-  (telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left)
-  (telephone-line-primary-right-separator 'telephone-line-cubed-right)
-  (telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
-  (telephone-line-height 24)
- ;; (telephone-line-lhs
- ;;         (nil    . (telephone-line-minor-mode-segment))
- ;;         (accent . (telephone-line-vc-segment
- ;;                    telephone-line-process-segment))
- ;;         (nil    . (telephone-line-buffer-segment))))
- ;; (telephone-line-rhs
- ;;       '((nil    . (telephone-line-misc-info-segment))
- ;;         (accent . (telephone-line-major-mode-segment))
- ;;         (nil    . (telephone-line-airline-position-segment))))
-  :config
-  (telephone-line-mode 1))
+(use-package minions
+  :config (minions-mode 1))
 
 (use-package ligature
   :straight (:host github
@@ -138,12 +123,10 @@
 				       "<->" "<-->" "<--->" "<---->" "<=>" "<==>" "<===>" "<====>" "-------->"
 				       "<~~" "<~" "~>" "~~>" "::" ":::" "==" "!=" "/=" "~=" "<>" "===" "!==" "=/=" "=!="
 				       ":=" ":-" ":+" "<*" "<*>" "*>" "<|" "<|>" "|>" "<." "<.>" ".>" "+:" "-:" "=:" ":>"
-				       "(* comm *)" "++" "+++" "\\/" "/\\" "|-" "-|" "<!--" "<!---" "<***>"))
+				       "(*" "*)" "[|" "|]" "{|" "|}" "++" "+++" "\\/" "/\\" "|-" "-|" "<!--" "<!---" "<***>"))
   ;; Enables ligature checks globally in all buffers. You can also do it
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
-
-
 
 ;; Ivy completion framework
 
@@ -221,12 +204,30 @@
   (lsp-ui-mode))
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 
+(use-package dap-mode)
+
+;;For prefix commands like C-c p or C-c h we want Emacs to visually guide you through the available options.
+(use-package which-key
+:ensure t
+:init
+(which-key-mode)
+)
+
+;; We can use quickrun package to execute code (if it has main)
+(use-package quickrun
+:ensure t
+:bind ("C-c r" . quickrun))
+
+;; Template system for Emacs. It allows you to type abbreviation and complete the associated text.
+(use-package yasnippet :config (yas-global-mode))
+(use-package yasnippet-snippets :ensure t)
+
 
 (use-package highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)
   :custom
   (highlight-indent-guides-method 'character)
-  (highlight-indent-guides-character ?▏)
+  (highlight-indent-guides-character ?│)
   (highlight-indent-guides-responsive 'top)
   (highlight-indent-guides-delay 0))
 
@@ -234,6 +235,7 @@
   :init
   (with-eval-after-load 'winum
     (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  (add-hook 'treemacs-mode-hook (lambda () (text-scale-decrease 1)))
   :config
   (progn
     (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
@@ -274,12 +276,12 @@
           treemacs-tag-follow-delay              1.5
           treemacs-user-mode-line-format         nil
           treemacs-user-header-line-format       nil
-          treemacs-width                         35
+          treemacs-width                         25
           treemacs-workspace-switch-cleanup      nil)
 
     ;; The default width and height of the icons is 22 pixels. If you are
     ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
+    (treemacs-resize-icons 18)
 
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
@@ -308,3 +310,10 @@
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
+
+(use-package lsp-java
+  :ensure t
+  :config (add-hook 'java-mode-hook 'lsp))
+
+;; Just4Fun
+(use-package 2048-game)
