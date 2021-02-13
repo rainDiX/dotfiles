@@ -204,7 +204,15 @@
   (lsp-ui-mode))
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 
+(use-package hydra)
 (use-package dap-mode)
+
+(use-package projectile 
+:ensure t
+:init (projectile-mode +1)
+:config 
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+)   
 
 ;;For prefix commands like C-c p or C-c h we want Emacs to visually guide you through the available options.
 (use-package which-key
