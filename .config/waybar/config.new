@@ -1,0 +1,277 @@
+[
+  {
+    "battery": {
+      "format": "{icon} {capacity}%",
+      "format-icons": [
+        " ",
+        " ",
+        " ",
+        " ",
+        " "
+      ]
+    },
+    "clock": {
+      "format": " {:%H:%M}",
+      "format-alt": " {:%a %d %b}",
+      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "cpu": {
+      "format": "﬙ {usage}%"
+    },
+    "custom/menu": {
+      "format": "",
+      "on-click": "rofi -theme launcher -show drun",
+      "tooltip": false
+    },
+    "custom/music": {
+      "exec": "/nix/store/450g31g344lhnw8f0sdd4yyf2y30j81i-waybar-player-mpris",
+      "format": " {} ",
+      "interval": 3,
+      "max-length": 40,
+      "return-type": "json"
+    },
+    "custom/powermenu": {
+      "format": "襤",
+      "on-click": "rofi-powermenu",
+      "tooltip": false
+    },
+    "custom/tempmon": {
+      "exec": "/nix/store/dhm12rcn38l2sjbgxk0pxlsw4wfcdcmm-waybar-sensors",
+      "format": "{icon} {}",
+      "format-icons": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "interval": 5,
+      "return-type": "json"
+    },
+    "height": 28,
+    "idle_inhibitor": {
+      "format": "{icon}",
+      "format-icons": {
+        "activated": " ",
+        "deactivated": " "
+      }
+    },
+    "layer": "top",
+    "margin-bottom": 3,
+    "margin-left": 12,
+    "margin-right": 12,
+    "margin-top": 6,
+    "memory": {
+      "format": " {}%"
+    },
+    "modules-center": [
+      "sway/mode",
+      "sway/window"
+    ],
+    "modules-left": [
+      "custom/menu",
+      "sway/workspaces",
+      "sway/language",
+      "pulseaudio",
+      "custom/music"
+    ],
+    "modules-right": [
+      "tray",
+      "idle_inhibitor",
+      "network",
+      "custom/tempmon",
+      "cpu",
+      "memory",
+      "battery",
+      "clock",
+      "custom/powermenu"
+    ],
+    "network": {
+      "format-disconnected": "⚠ Disconnected",
+      "format-ethernet": " {ipaddr}",
+      "format-wifi": "  {signalStrength}%",
+      "on-click": "/nix/store/jqvw18ilgcw434yz77l754dlks45bbnn-foot-1.6.2/bin/foot /nix/store/dy7jwvpz79lrg7gxh0givil4kj9nx31n-iwd-1.11/bin/iwctl",
+      "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+      "tooltip-format-wifi": "{essid} ({frequency} MHz)\n{ifname}: {ipaddr}/{cidr}\nSignal Strength {signaldBm} dBm\n{bandwidthDownOctets} {bandwidthUpOctets}"
+    },
+    "output": [
+      "eDP-1"
+    ],
+    "position": "top",
+    "pulseaudio": {
+      "format": "{icon} {volume}% {format_source}",
+      "format-bluetooth": "{icon} {volume}% {format_source}",
+      "format-bluetooth-muted": " {icon} {format_source}",
+      "format-icons": {
+        "car": "",
+        "default": [
+          "",
+          "",
+          ""
+        ],
+        "hands-free": "",
+        "headphone": "",
+        "headset": "",
+        "phone": "",
+        "portable": ""
+      },
+      "format-muted": " {format_source}",
+      "format-source": " {volume}%",
+      "format-source-muted": "",
+      "on-click": "/nix/store/gslfr4d363a0ykh0iclsxr9ndsc8syr7-pavucontrol-4.0/bin/pavucontrol"
+    },
+    "sway/language": {
+      "format": " {}",
+      "tooltip": false
+    },
+    "sway/mode": {
+      "format": "<span style=\"italic\">{}</span>"
+    },
+    "sway/window": {
+      "max-length": 40
+    },
+    "sway/workspaces": {
+      "all-outputs": false,
+      "disable-scroll": true
+    },
+    "tray": {
+      "spacing": 10
+    }
+  },
+  {
+    "battery": {
+      "format": "{icon} {capacity}%",
+      "format-icons": [
+        " ",
+        " ",
+        " ",
+        " ",
+        " "
+      ]
+    },
+    "clock": {
+      "format": " {:%H:%M}",
+      "format-alt": " {:%a %d %b}",
+      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "cpu": {
+      "format": "﬙ {usage}%"
+    },
+    "custom/menu": {
+      "format": "",
+      "on-click": "rofi -theme launcher -show drun",
+      "tooltip": false
+    },
+    "custom/music": {
+      "exec": "/nix/store/450g31g344lhnw8f0sdd4yyf2y30j81i-waybar-player-mpris",
+      "format": " {} ",
+      "interval": 3,
+      "max-length": 40,
+      "return-type": "json"
+    },
+    "custom/powermenu": {
+      "format": "襤",
+      "on-click": "rofi-powermenu",
+      "tooltip": false
+    },
+    "custom/tempmon": {
+      "exec": "/nix/store/dhm12rcn38l2sjbgxk0pxlsw4wfcdcmm-waybar-sensors",
+      "format": "{icon} {}",
+      "format-icons": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "interval": 5,
+      "return-type": "json"
+    },
+    "height": 28,
+    "idle_inhibitor": {
+      "format": "{icon}",
+      "format-icons": {
+        "activated": " ",
+        "deactivated": " "
+      }
+    },
+    "layer": "top",
+    "margin-bottom": 3,
+    "margin-left": 12,
+    "margin-right": 12,
+    "margin-top": 6,
+    "memory": {
+      "format": " {}%"
+    },
+    "modules-center": [
+      "sway/mode",
+      "sway/window"
+    ],
+    "modules-left": [
+      "custom/menu",
+      "sway/workspaces",
+      "sway/language",
+      "pulseaudio"
+    ],
+    "modules-right": [
+      "idle_inhibitor",
+      "network",
+      "custom/tempmon",
+      "cpu",
+      "memory",
+      "battery",
+      "clock",
+      "custom/powermenu"
+    ],
+    "network": {
+      "format-disconnected": "⚠ Disconnected",
+      "format-ethernet": " {ipaddr}",
+      "format-wifi": "  {signalStrength}%",
+      "on-click": "/nix/store/jqvw18ilgcw434yz77l754dlks45bbnn-foot-1.6.2/bin/foot /nix/store/dy7jwvpz79lrg7gxh0givil4kj9nx31n-iwd-1.11/bin/iwctl",
+      "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+      "tooltip-format-wifi": "{essid} ({frequency} MHz)\n{ifname}: {ipaddr}/{cidr}\nSignal Strength {signaldBm} dBm\n{bandwidthDownOctets} {bandwidthUpOctets}"
+    },
+    "output": [
+      "HDMI-A-1",
+      "DP-2"
+    ],
+    "position": "top",
+    "pulseaudio": {
+      "format": "{icon} {volume}% {format_source}",
+      "format-bluetooth": "{icon} {volume}% {format_source}",
+      "format-bluetooth-muted": " {icon} {format_source}",
+      "format-icons": {
+        "car": "",
+        "default": [
+          "",
+          "",
+          ""
+        ],
+        "hands-free": "",
+        "headphone": "",
+        "headset": "",
+        "phone": "",
+        "portable": ""
+      },
+      "format-muted": " {format_source}",
+      "format-source": " {volume}%",
+      "format-source-muted": "",
+      "on-click": "/nix/store/gslfr4d363a0ykh0iclsxr9ndsc8syr7-pavucontrol-4.0/bin/pavucontrol"
+    },
+    "sway/language": {
+      "format": " {}",
+      "tooltip": false
+    },
+    "sway/mode": {
+      "format": "<span style=\"italic\">{}</span>"
+    },
+    "sway/window": {
+      "max-length": 40
+    },
+    "sway/workspaces": {
+      "all-outputs": false,
+      "disable-scroll": true
+    },
+    "tray": {
+      "spacing": 10
+    }
+  }
+]

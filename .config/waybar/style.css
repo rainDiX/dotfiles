@@ -6,7 +6,7 @@
 }
 
 window#waybar {
-    background: #181818;
+    background: #0d1926;
 }
 
 #clock, #cpu, #memory, #pulseaudio,#workspaces, #window, #mode, #temperature, #battery, #network, #backlight, #idle_inhibitor, #tray, #custom-tempmon, #custom-music {
@@ -21,13 +21,14 @@ window#waybar {
     min-height: 24px;
     min-width: 18px;
     /*color: #808080;*/
-    color: #E5E5E5;
-/*    border-bottom: 3px solid transparent;*/
+    color: #b4e1fd;
+    border-bottom: 2px solid transparent;
 }
 
 #workspaces button.focused {
-    color: #E5E5E5;
-/*    border-bottom: 3px solid #8ab4f8;*/
+    color: #1eff8e;
+    /*font-weight: bold;*/
+    border-bottom: 2px solid #1eff8e; 
 }
 
 #workspaces label {
@@ -49,36 +50,36 @@ window#waybar {
 #custom-music {
     background: #060606;
     font-size: 11px;
-    border-bottom: 3px solid #c792ea;
+    border-bottom: 2px solid #c792ea;
 }
 
 #idle_inhibitor {
     padding: 0px 4px;
-    border-bottom: 3px solid #f07178;
+    border-bottom: 2px solid #f07178;
 }
 
 #network {
-    border-bottom: 3px solid #ffcb6b;
+    border-bottom: 2px solid #ffcb6b;
 }
 
 #custom-tempmon {
-    border-bottom: 3px solid #fffe6b;
+    border-bottom: 2px solid #fffe6b;
 }
 
 #cpu {
-    border-bottom: 3px solid #82aaff;
+    border-bottom: 2px solid #82aaff;
 }
 
 #memory {
-    border-bottom: 3px solid #c792ea;
+    border-bottom: 2px solid #c792ea;
 }
 
 #battery {
-    border-bottom: 3px solid #89ddff;
+    border-bottom: 2px solid #89ddff;
 }
 
 #clock {
-    border-bottom: 3px solid #eeffff;
+    border-bottom: 2px solid #eeffff;
 }
 
 #custom-powermenu {
