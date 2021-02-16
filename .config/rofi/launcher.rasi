@@ -8,7 +8,6 @@ configuration {
     display-run: "Commands";
     display-ssh: "SSH Connections";
     show-icons: true;
-    icon-theme: "korla";
     location: 0;
     yoffset: 0;
     xoffset: 0;
@@ -17,7 +16,7 @@ configuration {
     hide-scrollbar: true;
     show-icons: true;
     sidebar-mode: true;
-    font: "Roboto 12, Symbols Nerd Font 12";
+    font: "IBM Plex Sans 12, Symbols Nerd Font 12";
 }
 
 @import "colors.rasi"

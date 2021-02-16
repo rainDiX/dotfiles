@@ -13,12 +13,18 @@ hide_edge_borders none
 #
 font pango:Iosevka 10
 
+# scheme: "Material Darker"
+# author: "Nate Peterson"
+
 # class                 border  bground text    indicator child_border
-client.focused          #5294E2 #5294E2 #F8F8F2 #56ADBC   #5294E2
-client.focused_inactive #333333 #5F676A #F8F8F2 #484E50   #5F676A
-client.unfocused        #333333 #222222 #999995 #292D2E   #222222
-client.urgent           #2F343A #F92672 #F8F8F2 #66D9EF   #F92672
-client.placeholder      #1B1D1E #0C0C0C #F8F8F2 #000000   #0C0C0C
+client.focused          #EEFFFF #82AAFF #212121 #89DDFF   #82AAFF
+client.focused_inactive #303030 #303030 #EEFFFF #4A4A4A   #303030
+client.unfocused        #303030 #212121 #EEFFFF #303030   #303030
+client.urgent           #F07178 #F07178 #212121 #F07178   #F07178
+client.placeholder      #212121 #212121 #EEFFFF #212121   #212121
+
+client.background       #FFFFFF
+
 # xcursor
 seat seat0 xcursor_theme xcursor-chromeos 24
 gaps outer 3
@@ -40,7 +46,7 @@ set $ws9 "9"
 set $ws10 "10" 
 
 # Terminal emulator
-set $term alacritty
+set $term foot
 # Application launcher
 set $menu rofi -theme launcher -show drun
 ### Input configuration
@@ -84,6 +90,7 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 # start your launcher
 bindsym $mod+d exec $menu
+bindsym $mod+r exec rofi -theme launcher -show run
 # Resize them with right mouse button + $mod.
 # Despite the name, also works for non-floating windows.
 # Change normal to inverse to use left mouse button for resizing and right
@@ -177,8 +184,6 @@ mode "VM(mod+↑+⏎ to quit)" {
     # return to default mode
     bindsym $mod+Shift+Return mode "default"
 }
-
-bindsym $mod+r mode "resize"
 bindsym $mod+Shift+Escape mode "VM(mod+↑+⏎ to quit)"
 
 # Screenshot
@@ -194,8 +199,11 @@ bindsym --release $mod+alt+Shift+Print exec swayshot copy -w
 
 # Screen brightness
 #
-bindsym XF86MonBrightnessDown exec brightnessctl -q set 5%- && ( echo $((`brightnessctl get` * 100 / `brightnessctl m`)) > $SWAYSOCK.wob )
-bindsym XF86MonBrightnessUp exec brightnessctl -q set +5% && ( echo $((`brightnessctl get` * 100 / `brightnessctl m`)) > $SWAYSOCK.wob )
+#bindsym XF86MonBrightnessDown exec brightnessctl -q set 5%- && ( echo $((`brightnessctl get` * 100 / `brightnessctl m`)) > $SWAYSOCK.wob )
+#bindsym XF86MonBrightnessUp exec brightnessctl -q set +5% && ( echo $((`brightnessctl get` * 100 / `brightnessctl m`)) > $SWAYSOCK.wob )
+
+bindsym XF86MonBrightnessUp exec pkexec /usr/bin/brillo -qA 1 && brillo -qG | cut -d . -f 1 > $SWAYSOCK.wob
+bindsym XF86MonBrightnessDown exec pkexec /usr/bin/brillo -qU 1 && brillo -qG | cut -d . -f 1 > $SWAYSOCK.wob
 
 bindsym alt+XF86MonBrightnessUp exec ddclight + 2 && ddclight > $SWAYSOCK.wob
 bindsym alt+XF86MonBrightnessDown exec ddclight - 2 && ddclight > $SWAYSOCK.wob
@@ -255,38 +263,30 @@ bar {
 #assign [app_id="telegram-desktop"] → $ws10
 # Misc apps with pop-up I want floating
 #
-for_window [app_id="menu"] floating enable
 for_window [app_id="qalculate-gtk"] floating enable
 for_window [app_id="desktopclient.nextcloud.com.nextcloud"] floating enable
 for_window [app_id="com.nextcloud.desktopclient.nextcloud"] floating enable
-for_window [app_id="desktopclient.owncloud.com.owncloud"] floating enable
-for_window [app_id="xdg-desktop-portal-gtk"] floating enable
-for_window [app_id="floating-foot"] floating enable
 for_window [title="About Mozilla Firefox"] floating enable
-for_window [title="Firefox - Sharing Indicator"] floating enable
 # Enable floating for Picture in picture mode of chromium & firefox
-for_window [title="Picture-in-Picture"] floating enable
-for_window [title="Picture-in-picture"] floating enable
-# File picker for apps that doesn't use gtk-portal
-for_window [title="Select file"] floating enable
-for_window [title="Select folder"] floating enable
+for_window [title="Picture-in-[Pp]icture"] floating enable
+for_window [title="Firefox - Sharing Indicator"] floating enable
+for_window [title=".* is sharing your screen."] floating enable
+
+# File Picker
+for_window [title="Open [fF]ile"] floating enable
+for_window [title="Save [fF]ile"] floating enable
+for_window [title="Save [Aa]s"] floating enable
+for_window [title="Select [fF]ile"] floating enable
+for_window [title="Select [fF]older"] floating enable
+for_window [title="Open [fF]older"] floating enable
+for_window [title="Open [fF]older"] floating enable
+for_window [title="Open Workspace"] floating enable
 for_window [title="Extract archive"] floating enable
 for_window [title="Extract"] floating enable
-for_window [title="File Operation Progress"] floating enable
-for_window [title="Copying — Dolphin"] floating enable
+
 # Lutris
 for_window [title="Select an EXE or MSI file"] floating enable
-# Nemo pop-up
-#for_window [title="nemo" app_id="nemo"] floating enable
-for_window [title="xdg-su: *"] floating enable
-for_window [class="Etterna"] fullscreen enable
 
-exec swayidle -w \
-     	      timeout 300 'swaymsg "output * dpms off"' \
-	      resume 'swaymsg "output * dpms on"' \
-	      timeout 330 'swaylock -f -c 330000EF' \
-	      timeout 330 'systemctl suspend' \
-	      before-sleep 'swaylock -f -c 330000F4' 
 
 ## Autostart
 ##
