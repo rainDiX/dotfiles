@@ -9,12 +9,12 @@ do
   case $status in
     Playing )
       _text=" $(playerctl --player=$player metadata title) - $(playerctl --player=$player metadata artist)"
-      text="$text\n$_text"
+      text="$_text"
       tooltip="$tooltip$player : $_text"
       ;;
     Paused )
       _text=" $(playerctl --player=$player metadata title) - $(playerctl --player=$player metadata artist)"
-      text="$text\n$_text"
+      text="$_text"
       tooltip="$tooltip$player : $_text"
       ;;
     Stopped )
@@ -26,7 +26,7 @@ done
 
 # Remove the last new line & insert a \ before the quote character if present
 text=$(echo "$text" | tail -1 | sed 's|"|\\"|g')
-tooltip=$(echo $tooltip | sed 's|"|\\"|g')
+tooltip=$(printf "$tooltip" | sed 's|"|\\"|g')
 if [ -n "$text" ]; then
-  echo '{"text": "'$text'", "tooltip": "'$tooltip'" }'
+  printf "{\"text\": \"$text\", \"tooltip\": \"$tooltip\" }"
 fi
