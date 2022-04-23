@@ -1,107 +1,58 @@
-function fish_prompt
-    # This prompt shows:
-    # - green lines if the last return command is OK, red otherwise
-    # - your user name, in red if root or yellow otherwise
-    # - your hostname, in cyan if ssh or blue otherwise
-    # - the current path (with prompt_pwd)
-    # - date +%X
-    # - the current virtual environment, if any
-    # - the current git status, if any, with fish_git_prompt
-    # - the current battery state, if any, and if your power cable is unplugged, and if you have "acpi"
-    # - current background jobs, if any
+# Defined interactively
+function fish_prompt --description 'pythonista extended'
+    set -l last_pipestatus $pipestatus
+    set -lx __fish_last_status $status # Export for __fish_print_pipestatus.
+    set -l normal (set_color normal)
 
-    # It goes from:
-    # ┬─[nim@Hattori:~]─[11:39:00]
-    # ╰─>$ echo here
-
-    # To:
-    # ┬─[nim@Hattori:~/w/dashboard]─[11:37:14]─[V:django20]─[G:master↑1|●1✚1…1]─[B:85%, 05:41:42 remaining]
-    # │ 2	15054	0%	arrêtée	sleep 100000
-    # │ 1	15048	0%	arrêtée	sleep 100000
-    # ╰─>$ echo there
-
-    set -l retc red
-    test $status = 0; and set retc green
-
-    set -q __fish_git_prompt_showupstream
-    or set -g __fish_git_prompt_showupstream auto
-
-    function _nim_prompt_wrapper
-        set retc $argv[1]
-        set field_name $argv[2]
-        set field_value $argv[3]
-
-        set_color normal
-        set_color $retc
-        echo -n '─'
-        set_color -o green
-        echo -n '['
-        set_color normal
-        test -n $field_name
-        and echo -n $field_name:
-        set_color $retc
-        echo -n $field_value
-        set_color -o green
-        echo -n ']'
+    if not set -q VIRTUAL_ENV_DISABLE_PROMPT
+        set -g VIRTUAL_ENV_DISABLE_PROMPT true
     end
 
-    set_color $retc
-    echo -n '┬─'
-    set_color -o green
-    echo -n [
-    if test "$USER" = root -o "$USER" = toor
-        set_color -o red
-    else
-        set_color -o yellow
+    set -l color_cwd $fish_color_cwd
+    set -l suffix '→'
+    if functions -q fish_is_root_user; and fish_is_root_user
+        if set -q fish_color_cwd_root
+            set color_cwd $fish_color_cwd_root
+        end
+        set suffix '#'
     end
-    echo -n $USER
-    set_color -o white
-    echo -n @
-    if [ -z "$SSH_CLIENT" ]
-        set_color -o blue
-    else
-        set_color -o cyan
+
+    # If we're running via SSH, change the host color.
+    set -l color_host brblue
+    if set -q SSH_TTY
+        set color_host $fish_color_host_remote
     end
-    echo -n (prompt_hostname)
-    set_color -o white
-    echo -n :(prompt_pwd)
-    set_color -o green
-    echo -n ']'
 
-    # Date
-    _nim_prompt_wrapper $retc '' (date +%X)
+    # If we're running in a toolbox, append a hexagon symbol.
+    set toolbox_symbol ''
+    if test -f /run/.containerenv -a -f /run/.toolboxenv
+        #set toolbox_symbol '⬢'
+	set toolbox_symbol '🔧'
+    end
 
-    # Virtual Environment
-    set -q VIRTUAL_ENV_DISABLE_PROMPT
-    or set -g VIRTUAL_ENV_DISABLE_PROMPT true
-    set -q VIRTUAL_ENV
-    and _nim_prompt_wrapper $retc V (basename "$VIRTUAL_ENV")
+    # Write pipestatus
+    # If the status was carried over (e.g. after `set`), don't bold it.
+    set -l bold_flag --bold
+    set -q __fish_prompt_status_generation; or set -g __fish_prompt_status_generation $status_generation
+    if test $__fish_prompt_status_generation = $status_generation
+        set bold_flag
+    end
+    set __fish_prompt_status_generation $status_generation
+    set -l prompt_status (__fish_print_pipestatus "[" "]" "|" (set_color $fish_color_status) (set_color $bold_flag $fish_color_status) $last_pipestatus)
 
-    # git
-    set prompt_git (fish_git_prompt | string trim -c ' ()')
-    test -n "$prompt_git"
-    and _nim_prompt_wrapper $retc G $prompt_git
+    # virtualenv
+    if test -n "$VIRTUAL_ENV"
+        printf "(%s) " (set_color blue)(basename $VIRTUAL_ENV)(set_color normal)
+    end
 
-    # Battery status
-    type -q acpi
-    and test (acpi -a 2> /dev/null | string match -r off)
-    and _nim_prompt_wrapper $retc B (acpi -b | cut -d' ' -f 4-)
-
-    # New line
-    echo
-
+    # first line
+    printf '%s%s %sat %s%s%s %sin %s%s%s%s' (set_color $fish_color_user) $USER \
+            $normal (set_color $color_host) $toolbox_symbol (prompt_hostname) $normal (set_color $fish_color_cwd)\
+            (prompt_pwd) $normal (fish_vcs_prompt)
     # Background jobs
-    set_color normal
     for job in (jobs)
-        set_color $retc
-        echo -n '│ '
-        set_color brown
-        echo $job
+        printf '\n%s │ %s%s' (set_color brblack) $job $normal
     end
-    set_color normal
-    set_color $retc
-    echo -n '╰─>'
-    set_color -o red
-    echo -n '$ '
-    set_color normal
+    # last line
+    printf '\n%s%s%s ' $prompt_status $normal $suffix
 end

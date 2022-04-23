@@ -1,3 +1,3 @@
 function dots --description 'Manage the dotfiles git bare repository'
-	git --git-dir=$HOME/.cfg --work-tree=$HOME $argv
+    git --git-dir=$HOME/.local/share/dots --work-tree=$HOME $argv
 end
