@@ -1,4 +1,4 @@
-# This config file was written by Raimu
+# This config file was written by rain
 # Feel free to copy it and modify whatever you want
 
 ### Variables
@@ -11,7 +11,7 @@ hide_edge_borders none
 
 ## Window style 
 #
-font pango:Iosevka 10
+font pango:Fira Mono 10
 
 # scheme: "Material Darker"
 # author: "Nate Peterson"
@@ -26,7 +26,7 @@ client.placeholder      #212121 #212121 #EEFFFF #212121   #212121
 client.background       #FFFFFF
 
 # xcursor
-seat seat0 xcursor_theme xcursor-chromeos 24
+seat seat0 xcursor_theme Adwaita 24
 gaps outer 3
 gaps inner 6
 smart_gaps on
@@ -48,15 +48,14 @@ set $ws10 "10"
 # Terminal emulator
 set $term foot
 # Application launcher
-set $menu rofi -theme launcher -show drun
+set $menu wofi -I --show drun
 ### Input configuration
 #
 input type:keyboard {
     repeat_delay 500
     repeat_rate 30
-    xkb_layout fr,us,fr
-    xkb_variant us,altgr-intl,
-    xkb_options grp:ctrls_toggle,caps:ctrl_modifier,shift:both_capslock_cancel
+    xkb_layout us
+    xkb_options compose:ralt,caps:escape,shift:both_capslock_cancel
 }
 input type:touchpad {
 #    events disabled
@@ -90,7 +89,7 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 # start your launcher
 bindsym $mod+d exec $menu
-bindsym $mod+r exec rofi -theme launcher -show run
+bindsym $mod+r exec wofi --show run
 # Resize them with right mouse button + $mod.
 # Despite the name, also works for non-floating windows.
 # Change normal to inverse to use left mouse button for resizing and right
@@ -199,30 +198,18 @@ bindsym --release $mod+alt+Shift+Print exec swayshot copy -w
 
 # Screen brightness
 #
-#bindsym XF86MonBrightnessDown exec brightnessctl -q set 5%- && ( echo $((`brightnessctl get` * 100 / `brightnessctl m`)) > $SWAYSOCK.wob )
-#bindsym XF86MonBrightnessUp exec brightnessctl -q set +5% && ( echo $((`brightnessctl get` * 100 / `brightnessctl m`)) > $SWAYSOCK.wob )
-
-bindsym XF86MonBrightnessUp exec pkexec /usr/bin/brillo -qA 1 && brillo -qG | cut -d . -f 1 > $SWAYSOCK.wob
-bindsym XF86MonBrightnessDown exec pkexec /usr/bin/brillo -qU 1 && brillo -qG | cut -d . -f 1 > $SWAYSOCK.wob
-
-bindsym alt+XF86MonBrightnessUp exec ddclight + 2 && ddclight > $SWAYSOCK.wob
-bindsym alt+XF86MonBrightnessDown exec ddclight - 2 && ddclight > $SWAYSOCK.wob
+bindsym XF86MonBrightnessUp exec brightnessctl s +4%
+bindsym XF86MonBrightnessDown exec brightnessctl s 4%-
 
 #Keyboard brightness
-bindsym XF86KbdBrightnessUp exec pkexec /usr/bin/brillo -A 1 -rks dell::kbd_backlight
-bindsym XF86KbdBrightnessDown exec pkexec /usr/bin/brillo -U 1 -rks dell::kbd_backlight
+#bindsym XF86KbdBrightnessUp exec pkexec /usr/bin/brillo -A 1 -rks dell::kbd_backlight
+#bindsym XF86KbdBrightnessDown exec pkexec /usr/bin/brillo -U 1 -rks dell::kbd_backlight
 
 # Volume pulse
-bindsym XF86AudioRaiseVolume exec pamixer -ui 2 && pamixer --get-volume > $SWAYSOCK.wob
-bindsym XF86AudioLowerVolume exec pamixer -ud 2 && pamixer --get-volume > $SWAYSOCK.wob
-bindsym XF86AudioMute exec pamixer --toggle-mute && (pamixer·--get-mute && echo 0 > $SWAYSOCK.wob)
+bindsym XF86AudioRaiseVolume exec pamixer -ui 2
+bindsym XF86AudioLowerVolume exec pamixer -ud 2
+bindsym XF86AudioMute exec pamixer --toggle-mute
 bindsym XF86AudioMicMute exec --no-startup-id pamixer --default-source -t
-
-# Volume Plain Alsa
-#
-#bindsym XF86AudioRaiseVolume exec amixer -q set Master 2%+ unmute
-#bindsym XF86AudioLowerVolume exec amixer -q set Master 2%- unmute
-#bindsym XF86AudioMute exec (amixer get Master | grep off > /dev/null && amixer -q set Master unmute || (amixer -q set Master mute )
 
 # Media Control
 #
@@ -232,7 +219,7 @@ bindsym XF86AudioPrev exec mediacontrol previous
 
 # Calculator key
 #
-bindsym XF86Calculator exec qalculate-gtk 
+bindsym XF86Calculator exec qalculate-qt 
 
 # Lock the session
 #
@@ -242,16 +229,6 @@ bindsym $mod+ctrl+l exec swaylock -f -c 330000F4
 #
 bindsym $mod+semicolon exec ~/.local/scripts/splatmoji/splatmoji copy
 
-# Program bindsym
-#
-bindsym XF86Search exec nautilus --new-window
-bindsym $mod+escape exec $term htop
-
-# Rofi scripts
-#
-bindsym $mod+u exec rofi-udisks mount
-bindsym $mod+Shift+U exec rofi-udisks unmount
-
 ## Bar
 bar {
     swaybar_command waybar
@@ -260,9 +237,7 @@ bar {
 #
 # Windows rules
 #
-#assign [app_id="telegram-desktop"] → $ws10
 # Misc apps with pop-up I want floating
-#
 for_window [app_id="qalculate-gtk"] floating enable
 for_window [app_id="desktopclient.nextcloud.com.nextcloud"] floating enable
 for_window [app_id="com.nextcloud.desktopclient.nextcloud"] floating enable
@@ -272,29 +247,9 @@ for_window [title="Picture-in-[Pp]icture"] floating enable
 for_window [title="Firefox - Sharing Indicator"] floating enable
 for_window [title=".* is sharing your screen."] floating enable
 
-# File Picker
-for_window [title="Open [fF]ile"] floating enable
-for_window [title="Save [fF]ile"] floating enable
-for_window [title="Save [Aa]s"] floating enable
-for_window [title="Select [fF]ile"] floating enable
-for_window [title="Select [fF]older"] floating enable
-for_window [title="Open [fF]older"] floating enable
-for_window [title="Open [fF]older"] floating enable
-for_window [title="Open Workspace"] floating enable
-for_window [title="Extract archive"] floating enable
-for_window [title="Extract"] floating enable
-
-# Lutris
-for_window [title="Select an EXE or MSI file"] floating enable
-
-
 ## Autostart
 ##
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-#exec /usr/lib/xdg-desktop-portal -r & /usr/lib/xdg-desktop-portal-wlr
-exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
-# autostart applications via xdg via dex
-exec dex -a
 
 # Machine specific settings like wallpaper, output & some input configurations are in config.local
 include $HOME/.config/sway/config.local
